@@ -11,7 +11,7 @@ const Header = () => {
         <div className='cart-and-counter'>
             <img src={ShoppingCart} alt='' className='cart-image' data-test='cart-image'/>
             <div className='cart-counter' data-test='cart-counter'>
-
+                <p className='cart-counter-number' data-test='cart-counter-number'>0</p>
             </div>
         </div>
     </div>

@@ -20,15 +20,17 @@ describe('Header.js', () => {
   it('Cart counter circle should be visible', () => {
     cy.get("[data-test='cart-counter']").should('be.visible')
   })
+  it('Cart counter is zero by default', () => {
+    cy.get("[data-test='cart-counter-number']").contains('0')
+  })
 })
 
 describe('Cart icon functionality', () => {
   beforeEach(() => {
     cy.viewport(1920, 1080)
   })
-
-  it('Cart count ', () => {
-    cy.mount(<Header cartItemCount={cartItemCount}/>)
-
+  it('Cart counter is zero by default', () => {
+    cy.mount(<Header />)
+    cy.get("[data-test='cart-counter-number']").contains('0')
   })
 })

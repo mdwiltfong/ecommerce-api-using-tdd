@@ -50,3 +50,25 @@ body {
 .cart-and-counter {
   display: flex;
 }
+
+.cart-counter-number {
+  color: rgb(255, 255, 255);
+  position: relative;
+  top: -15px;
+  left: 8px;
+  font-weight: bold;
+}
+
+/* ProductBox */
+.product-box {
+  width: 1240px;
+  height: 606px;
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 22px;
+  margin-left: auto;
+  margin-right: auto;
+
+}
