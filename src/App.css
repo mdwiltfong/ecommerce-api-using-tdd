@@ -77,12 +77,64 @@ body {
 .tshirt {
   width: 609px;
   height: 606px;
+  margin-left: 200px;
 }
 
 .container {
   margin-top: 100px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 300px;
+  gap: 200px;
+}
+
+.specs {
+  text-align: center;
+}
+
+/* Login */
+.login {
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 346px;
+  height: 491px;
+  box-shadow: 10px 10px 25px grey;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.no-account {
+  margin-top: 0px;
+  color: blue;
+}
+
+.profile-image {
+  height: 99px;
+  width: 99px;
+  background: grey;
+  border-radius: 50px;
+  /* margin-top: 41px; */
+  margin: 41px auto 20px;
+}
+
+.username {
+  font-size: 15px;
+  margin-bottom: 11px;
+  border-radius: 5px;
+  height: 43px;
+  width: 267px;
+}
+
+.password {
+  font-size: 15px;
+  margin-bottom: 11px;
+  border-radius: 5px;
+  height: 43px;
+  width: 267px;
+}
+
+.login-button {
+  margin-top: 11px;
+  height: 43px;
+  width: 267px;
 }
