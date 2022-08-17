@@ -2,7 +2,7 @@ import React from 'react'
 
 const Login = () => {
   return (
-    <div className='login'>
+    <div className='login' >
         <div className='profile-image' data-test='profile-image'></div>
         <h2 data-test='header'>Welcome Back!</h2>
         <form>

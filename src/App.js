@@ -11,7 +11,7 @@ function App() {
       <Header/>
       {/* <ProductBox/> */}
       {/* <TshirtPage/> */}
-      <Login/>
+      {/* <Login/> */}
     </div>
   );
 }
