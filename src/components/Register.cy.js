@@ -1,4 +1,5 @@
 import Register from './Register'
+import Login from './Login'
 
 describe('Register Form', () => {
     beforeEach(() => {
@@ -21,10 +22,24 @@ describe('Register Form', () => {
     it('Confirm password input is rendered', () => {
         cy.get("input[placeholder='Confirm Password']")
     })
-    it('Checkbox is rendered', () => {
-        cy.get(":checkbox")
-    })
     it('Register button is rendered', () => {
         cy.get("[data-test='register']").contains('Register')
     })
 })
+
+describe('Register button functionality', () => {
+    beforeEach(() => {
+        cy.viewport(1920, 1080)
+    })
+    it('Register button sends user info', () => {
+        cy.mount(<Register />)
+      
+        cy.get()
+
+        cy.mount(<Login/>)
+  
+        cy.get("[data-test='profile-image']")
+          .should('be.visible')
+    })
+  })
+

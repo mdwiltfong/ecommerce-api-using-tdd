@@ -11,16 +11,19 @@ describe('Operations on user accounts', () => {
     cy.get('[data-test="login"]')
       .contains('No account? Register here');
 
-    cy.get('[data-test="register-link"]')
+    cy.get('[data-test="no-account"]')
       .click();
 
-    cy.get('[data-test="username-input"]')
+    cy.get("[data-test='register']")
+      .contains('Register')
+
+    cy.get('[data-test="username"]')
       .type('JohnDoe');
 
-    cy.get('[data-test="password-input"]')
+    cy.get('[data-test="password"]')
       .type('123456');
 
-    cy.get('[data-test="confirm-password-input"]')
+    cy.get('[data-test="confirm-password"]')
       .type('123456');
     
     cy.get('[data-test="register-button"]')

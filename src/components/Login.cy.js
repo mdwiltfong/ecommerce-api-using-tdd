@@ -1,4 +1,5 @@
 import Login from "./Login";
+import Register from './Register'
 
 describe('Login form', () => {
     beforeEach(() => {
@@ -28,3 +29,20 @@ describe('Login form', () => {
         cy.get("[data-test='no-account']").contains('No account? Register here')
     })
 })
+
+describe('No account link functionality', () => {
+    beforeEach(() => {
+      cy.viewport(1920, 1080)
+    })
+    it('Accounts image clicked renders login', () => {
+      cy.mount(<Login />)
+  
+      cy.get("[data-test='no-account']")
+        .click()
+      
+      cy.mount(<Register/>)
+  
+      cy.get("[data-test='profile-image']")
+        .should('be.visible')
+    })
+  })

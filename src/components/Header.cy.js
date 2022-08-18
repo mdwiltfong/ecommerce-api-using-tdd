@@ -1,4 +1,7 @@
 import Header from './Header'
+import Login from './Login'
+import App from '../App'
+import Register from './Register'
 
 describe('Header.js', () => {
   beforeEach(() => {
@@ -32,5 +35,22 @@ describe('Cart icon functionality', () => {
   it('Cart counter is zero by default', () => {
     cy.mount(<Header />)
     cy.get("[data-test='cart-counter-number']").contains('0')
+  })
+})
+
+describe('Accounts image functionality', () => {
+  beforeEach(() => {
+    cy.viewport(1920, 1080)
+  })
+  it('Accounts image clicked renders login', () => {
+    cy.mount(<Header />)
+
+    cy.get("[data-test='accounts-image']")
+      .click()
+    
+    cy.mount(<Login/>)
+
+    cy.get("[data-test='profile-image']")
+      .should('be.visible')
   })
 })

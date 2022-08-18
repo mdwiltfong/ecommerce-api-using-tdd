@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Login = () => {
+const Login = (props) => {
   return (
-    <div className='login' >
+    <div className='login' data-test="login" >
         <div className='profile-image' data-test='profile-image'></div>
         <h2 data-test='header'>Welcome Back!</h2>
         <form>
@@ -30,7 +30,7 @@ const Login = () => {
             <br/>
             <button data-test='login' className='login-button'>Login</button>
         </form>
-        <p className='no-account' data-test='no-account'>No account? Register here</p>
+        <p className='no-account' data-test='no-account' onClick={props.callRegister}>No account? Register here</p>
     </div>
   )
 }
