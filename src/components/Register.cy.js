@@ -32,14 +32,17 @@ describe('Register button functionality', () => {
         cy.viewport(1920, 1080)
     })
     it('Register button sends user info', () => {
-        cy.mount(<Register />)
-      
-        // cy.get()
-
-        cy.mount(<Login/>)
-  
-        cy.get("[data-test='profile-image']")
-          .should('be.visible')
+        cy.request({
+            method: 'POST',
+            url: '/api/register',
+            body: {
+                username: 'JohnDoe',
+                password: '123456',
+                confirmPassword: '123456'
+            }
+        }).then( profile => {
+            expect(profile.status).to.eq(201)
+        })
     })
   })
 

@@ -38,19 +38,19 @@ describe('Cart icon functionality', () => {
   })
 })
 
-describe('Accounts image functionality', () => {
-  beforeEach(() => {
-    cy.viewport(1920, 1080)
-  })
-  it('Accounts image clicked renders login', () => {
-    cy.mount(<Header />)
+// describe('Accounts image functionality', () => {
+//   beforeEach(() => {
+//     cy.viewport(1920, 1080)
+//   })
+//   it('Accounts image clicked renders login', () => {
+//     cy.mount(<Header />)
 
-    cy.get("[data-test='accounts-image']")
-      .click()
+//     cy.get("[data-test='accounts-image']")
+//       .click()
     
-    cy.mount(<Login/>)
+//     cy.mount(<Login/>)
 
-    cy.get("[data-test='profile-image']")
-      .should('be.visible')
-  })
-})
+//     cy.get("[data-test='profile-image']")
+//       .should('be.visible')
+//   })
+// })
