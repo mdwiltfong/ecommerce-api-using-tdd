@@ -5,31 +5,15 @@ import ProductBox from './components/ProductBox';
 import TshirtPage from './components/TshirtPage';
 import Login from './components/Login';
 import Register from './components/Register';
+import { Outlet } from 'react-router-dom'
 
 
 function App() {
-  
-  const [displayLogin, setDisplayLogin] = React.useState(false);
-  const [displayRegister, setDisplayRegister] = React.useState(false);
 
-  const renderLogin = () => {
-    console.log("clicked");
-    setDisplayLogin(!displayLogin)
-  } 
-
-  const renderRegister = () => {
-    console.log("Register clicked");
-    setDisplayRegister(true)
-    setDisplayLogin(false);
-  }
-  
   return (
     <div className="app">
-      <Header callLogin={renderLogin}/>
-      {/* <ProductBox/> */}
-      {/* <TshirtPage/> */}
-      {displayLogin && <Login callRegister={renderRegister}/>}
-      {displayRegister && <Register/>}
+      <Header />
+      <Outlet/>
     </div>
   );
 }

@@ -34,7 +34,7 @@ describe('Register button functionality', () => {
     it('Register button sends user info', () => {
         cy.mount(<Register />)
       
-        cy.get()
+        // cy.get()
 
         cy.mount(<Login/>)
   
