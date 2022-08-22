@@ -34,9 +34,9 @@ describe('Register button functionality', () => {
     it('Register button sends user info', () => {
         cy.request({
             method: 'POST',
-            url: '/api/register',
+            url: '/register',
             body: {
-                username: 'JohnDoe',
+                email: 'JohnDoe@jdmail.com',
                 password: '123456',
                 confirmPassword: '123456'
             }

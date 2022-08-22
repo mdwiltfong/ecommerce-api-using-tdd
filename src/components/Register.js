@@ -4,22 +4,34 @@ const Register = () => {
   
     const [registerData, setRegisterData] = React.useState(
         {
-            username: '',
+            email: '',
             password: '',
             confirmPassword: ''
         }
     )
         // console.log(registerData)
-    const submitData = (event) => {
+
+    const submitData = async (event) => {
         event.preventDefault();
-        
-        setRegisterData(
-            {
-                username: '',
-                password: '',
-                confirmPassword: '' 
+
+            try {
+                const body = registerData ;
+                const response = await fetch("http://localhost:5000/api/profile", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body)
+                })
+                console.log(response)
+            } catch(err) {
+                console.error(err.message);
             }
-            )
+            // setRegisterData(
+            //     {
+            //         email: '',
+            //         password: '',
+            //         confirmPassword: '' 
+            //     }
+            //     )
 
     }
     
@@ -39,12 +51,12 @@ const Register = () => {
         <h2 data-test='header'>Register a new <br/> account below!</h2>
         <form onSubmit={submitData}>
             <input
-                className='username'
-                data-test='username'
-                placeholder='Username'
-                name='username'
+                className='email'
+                data-test='email'
+                placeholder='Email'
+                name='email'
                 onChange={handleChange}
-                value={registerData.username}
+                value={registerData.email}
             />
             <input
                 className='password'
