@@ -15,8 +15,8 @@ profileRouter.post('/', async (req, res, next) => {
             hash
         });
         const newEmail = await pool.query(
-            "INSERT INTO (email) VALUES ($1)",
-            [email]
+            "INSERT INTO users(email, passwordhash) VALUES ($1, $2)",
+            [email, hash]
         );
         res.status(200).json(newEmail)
     } catch (err) {
