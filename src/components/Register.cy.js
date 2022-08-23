@@ -44,5 +44,6 @@ describe('Register button functionality', () => {
             expect(profile.status).to.eq(200)
         })
     })
+    
   })
 

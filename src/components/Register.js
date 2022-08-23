@@ -1,7 +1,8 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Register = () => {
-  
+    const navigate = useNavigate();
     const [registerData, setRegisterData] = React.useState(
         {
             email: '',
@@ -25,13 +26,14 @@ const Register = () => {
             } catch(err) {
                 console.error(err.message);
             }
-            // setRegisterData(
-            //     {
-            //         email: '',
-            //         password: '',
-            //         confirmPassword: '' 
-            //     }
-            //     )
+            setRegisterData(
+                {
+                    email: '',
+                    password: '',
+                    confirmPassword: '' 
+                }
+                )
+            navigate('/login');
 
     }
     
@@ -53,7 +55,7 @@ const Register = () => {
             <input
                 className='email'
                 data-test='email'
-                placeholder='Email'
+                placeholder='E-mail'
                 name='email'
                 onChange={handleChange}
                 value={registerData.email}

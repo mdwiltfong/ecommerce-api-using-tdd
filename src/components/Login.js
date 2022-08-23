@@ -8,10 +8,10 @@ const Login = (props) => {
         <h2 data-test='header'>Welcome Back!</h2>
         <form>
             <input
-                className='username'
-                data-test='username'
-                placeholder='Username'
-                name='username'
+                className='email'
+                data-test='email'
+                placeholder='E-mail'
+                name='email'
             />
             <input
                 className='password'
