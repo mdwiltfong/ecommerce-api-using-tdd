@@ -14,7 +14,7 @@ describe('Register Form', () => {
         cy.get("[data-test='header']").contains('Register a new account below!')
     })
     it('Username input is rendered', () => {
-        cy.get("input[placeholder='Username']")
+        cy.get("input[placeholder='Email']")
     })
     it('Password input is rendered', () => {
         cy.get("input[placeholder='Password']")
@@ -34,14 +34,14 @@ describe('Register button functionality', () => {
     it('Register button sends user info', () => {
         cy.request({
             method: 'POST',
-            url: '/register',
+            url: 'http://localhost:5000/api/profile',
             body: {
                 email: 'JohnDoe@jdmail.com',
                 password: '123456',
                 confirmPassword: '123456'
             }
         }).then( profile => {
-            expect(profile.status).to.eq(201)
+            expect(profile.status).to.eq(200)
         })
     })
   })

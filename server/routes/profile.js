@@ -1,6 +1,7 @@
 const express = require('express');
+const pool = require('../db');
 const profileRouter = express.Router();
-var bcrypt = require('bcryptjs')
+var bcrypt = require('bcryptjs');
 
 //"POST" a hashed password and username
 profileRouter.post('/', async (req, res, next) => {
@@ -13,7 +14,11 @@ profileRouter.post('/', async (req, res, next) => {
             confirmPassword,
             hash
         });
-        res.status(200).json('All good')
+        const newEmail = await pool.query(
+            "INSERT INTO (email) VALUES ($1)",
+            [email]
+        );
+        res.status(200).json(newEmail)
     } catch (err) {
         console.log(err);
         res.status(500).send('Something broke!');
