@@ -1,9 +1,12 @@
 import Register from './Register'
-import Login from './Login'
+import { BrowserRouter as Router} from 'react-router-dom'
+
 
 describe('Register Form', () => {
     beforeEach(() => {
-        cy.mount(<Register/>)
+        cy.mount(<Router>
+                    <Register />
+                 </Router>)
         cy.viewport(1920,1080)
     })
 
@@ -14,7 +17,7 @@ describe('Register Form', () => {
         cy.get("[data-test='header']").contains('Register a new account below!')
     })
     it('Username input is rendered', () => {
-        cy.get("input[placeholder='Email']")
+        cy.get("input[placeholder='E-mail']")
     })
     it('Password input is rendered', () => {
         cy.get("input[placeholder='Password']")
@@ -30,6 +33,9 @@ describe('Register Form', () => {
 describe('Register button functionality', () => {
     beforeEach(() => {
         cy.viewport(1920, 1080)
+        cy.mount(<Router>
+                    <Register />
+                </Router>)
     })
     it('Register button sends user info', () => {
         cy.request({
@@ -44,6 +50,24 @@ describe('Register button functionality', () => {
             expect(profile.status).to.eq(200)
         })
     })
-    
   })
 
+describe('Register component functionality', () => {
+    beforeEach(() => {
+        cy.viewport(1920,1080)
+    })
+    it('Rejects non-macthing passwords', () => {
+        // const submitData = cy.stub()
+        cy.mount(<Router>
+                    <Register />
+                </Router>)
+        cy.get("[data-test='email']").type('JohnDoe@JDmail.com')
+        cy.get("[data-test='password']").type('123456')
+        cy.get("[data-test='confirmpassword']").type('234567')
+        cy.get("[data-test='register-button']").click()
+        cy.get("[data-test='password-warning']").contains('Please enter matching passwords')
+    })
+    it('Verifies passwords', () => {
+        expect()
+    })
+})

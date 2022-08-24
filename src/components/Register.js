@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 const Register = () => {
     const navigate = useNavigate();
+    const [verifyPassword, setVerifyPassword] = React.useState(false)
     const [registerData, setRegisterData] = React.useState(
         {
             email: '',
@@ -14,7 +15,7 @@ const Register = () => {
 
     const submitData = async (event) => {
         event.preventDefault();
-
+        if(registerData.password === registerData.confirmPassword){
             try {
                 const body = registerData ;
                 const response = await fetch("http://localhost:5000/api/profile", {
@@ -34,7 +35,9 @@ const Register = () => {
                 }
                 )
             navigate('/login');
-
+            } else {
+                setVerifyPassword(true);
+            }
     }
     
     const handleChange = (event) => {
@@ -69,8 +72,8 @@ const Register = () => {
                 value={registerData.password}
             />
             <input
-                className='confirm-password'
-                data-test='confirm-password'
+                className='confirmpassword'
+                data-test='confirmpassword'
                 placeholder='Confirm Password'
                 name='confirmPassword'
                 onChange={handleChange}
@@ -85,6 +88,7 @@ const Register = () => {
                 name="remember-me"
                 />
             <label htmlFor='remember-me'>Remember me</label> */}
+            {verifyPassword && <p data-test='password-warning' className='password-warning'>Please enter matching passwords</p>}
             <br/>
             <button data-test='register-button' className='register-button'>Register</button>
         </form>
