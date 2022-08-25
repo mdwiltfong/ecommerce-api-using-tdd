@@ -1,8 +1,10 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import validator from 'validator';
 
 const Register = () => {
     const navigate = useNavigate();
+    const [verifyEmail, setVerifyEmail] = React.useState(false)
     const [verifyPassword, setVerifyPassword] = React.useState(false)
     const [registerData, setRegisterData] = React.useState(
         {
@@ -12,32 +14,38 @@ const Register = () => {
         }
     )
         // console.log(registerData)
+    
+    
 
     const submitData = async (event) => {
         event.preventDefault();
-        if(registerData.password === registerData.confirmPassword){
-            try {
-                const body = registerData ;
-                const response = await fetch("http://localhost:5000/api/profile", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(body)
-                })
-                console.log(response)
-            } catch(err) {
-                console.error(err.message);
-            }
-            setRegisterData(
-                {
-                    email: '',
-                    password: '',
-                    confirmPassword: '' 
+        if(validator.isEmail(registerData.email)) {
+            if(registerData.password === registerData.confirmPassword){
+                try {
+                    const body = registerData ;
+                    const response = await fetch("http://localhost:5000/api/profile", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(body)
+                    })
+                    console.log(response)
+                } catch(err) {
+                    console.error(err.message);
                 }
-                )
-            navigate('/login');
-            } else {
-                setVerifyPassword(true);
+                setRegisterData(
+                    {
+                        email: '',
+                        password: '',
+                        confirmPassword: '' 
+                    }
+                    )
+                navigate('/login');
+                } else {
+                    setVerifyPassword(true);
             }
+        } else {
+            setVerifyEmail(true)
+        }
     }
     
     const handleChange = (event) => {
@@ -89,6 +97,7 @@ const Register = () => {
                 />
             <label htmlFor='remember-me'>Remember me</label> */}
             {verifyPassword && <p data-test='password-warning' className='password-warning'>Please enter matching passwords</p>}
+            {verifyEmail && <p data-test='email-warning' className='email-warning'>Please enter valid E-mail</p>}
             <br/>
             <button data-test='register-button' className='register-button'>Register</button>
         </form>

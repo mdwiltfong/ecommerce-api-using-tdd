@@ -67,7 +67,14 @@ describe('Register component functionality', () => {
         cy.get("[data-test='register-button']").click()
         cy.get("[data-test='password-warning']").contains('Please enter matching passwords')
     })
-    it('Verifies passwords', () => {
-        expect()
+    it('Rejects improperly formatted E-mail', () => {
+        cy.mount(<Router>
+                    <Register />
+                </Router>)
+        cy.get("[data-test='email']").type('JohnDoeJDmail.com')
+        cy.get("[data-test='password']").type('123456')
+        cy.get("[data-test='confirmpassword']").type('123456')
+        cy.get("[data-test='register-button']").click()
+        cy.get("[data-test='email-warning']").contains('Please enter valid E-mail')
     })
 })
