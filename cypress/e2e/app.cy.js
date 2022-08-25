@@ -1,35 +1,33 @@
-describe('Operations on user accounts', () => {
-  it('Register for account', () => {
-    cy.visit('http://localhost:3000')
+import { loginPage } from "../support/page_objects/LoginPage";
 
-    cy.get("[data-test='accounts-image']")
-      .should('be.visible')
+describe("Operations on user accounts", () => {
+  it("User can navigate to registration page from LoginPage and register", () => {
+    loginPage.visit();
+    cy.get("[data-test='accounts-image']").should("be.visible");
+    const registrationPage = loginPage.visitRegistration();
+    registrationPage;
+  });
+  it.skip("User can navigate to registration page from LoginPage and register", () => {
+    cy.visit("http://localhost:3000");
 
-    cy.get('[data-test="accounts-image"]')
-      .click();
+    cy.get("[data-test='accounts-image']").should("be.visible");
 
-    cy.get('[data-test="login"]')
-      .contains('No account? Register here');
+    cy.get('[data-test="accounts-image"]').click();
 
-    cy.get('[data-test="no-account"]')
-      .click();
+    cy.get('[data-test="login"]').contains("No account? Register here");
 
-    cy.get("[data-test='register']")
-      .contains('Register')
+    cy.get('[data-test="no-account"]').click();
 
-    cy.get('[data-test="email"]')
-      .type('JohnDoe@JDmail.com');
+    cy.get("[data-test='register']").contains("Register");
 
-    cy.get('[data-test="password"]')
-      .type('123456');
+    cy.get('[data-test="email"]').type("JohnDoe@JDmail.com");
 
-    cy.get('[data-test="confirm-password"]')
-      .type('123456');
-    
-    cy.get('[data-test="register-button"]')
-      .click();
-    
-    cy.get('[data-test="login"]')
-      .contains('Welcome');
-  })
-})
+    cy.get('[data-test="password"]').type("123456");
+
+    cy.get('[data-test="confirmpassword"]').type("123456");
+
+    cy.get('[data-test="register-button"]').click();
+
+    cy.get('[data-test="login"]').contains("Welcome");
+  });
+});
