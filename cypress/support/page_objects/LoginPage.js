@@ -1,10 +1,10 @@
 import { registrationPage } from "./RegistrationPage";
 export class LoginPage {
   visit() {
-    cy.visit("/");
+    cy.visit("/login");
   }
-  visitRegistration() {
-    cy.get("[data-test='accounts-image']").click();
+  clickRegistrationLink() {
+    cy.get("[data-test='no-account']").click();
     return registrationPage;
   }
 }

@@ -1,11 +1,19 @@
 import { loginPage } from "../support/page_objects/LoginPage";
+import { registrationPage } from "../support/page_objects/RegistrationPage";
 
 describe("Operations on user accounts", () => {
-  it("User can navigate to registration page from LoginPage and register", () => {
+  beforeEach(() => {
+    cy.visit("/");
+  });
+  it("User can navigate to registration page from loginPage", () => {
     loginPage.visit();
-    cy.get("[data-test='accounts-image']").should("be.visible");
-    const registrationPage = loginPage.visitRegistration();
-    registrationPage;
+    loginPage.clickRegistrationLink();
+    cy.get("h2").should("have.text", "Register a new  account below!");
+  });
+  it("User can register on registration page", () => {
+    registrationPage.visit();
+    cy.get("h2").should("have.text", "Register a new  account below!");
+    registrationPage.registerTestUser();
   });
   it.skip("User can navigate to registration page from LoginPage and register", () => {
     cy.visit("http://localhost:3000");
