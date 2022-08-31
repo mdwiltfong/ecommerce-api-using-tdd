@@ -77,4 +77,14 @@ describe('Register component functionality', () => {
         cy.get("[data-test='register-button']").click()
         cy.get("[data-test='email-warning']").contains('Please enter valid E-mail')
     })
+    it('Rejects repeated E-mail', () => {
+        cy.mount(<Router>
+                    <Register />
+                </Router>)
+        cy.get("[data-test='email']").type('Cec@cmail.com')
+        cy.get("[data-test='password']").type('123456')
+        cy.get("[data-test='confirmpassword']").type('123456')
+        cy.get("[data-test='register-button']").click()
+        cy.get("[data-test='existing-email-warning']").contains('Please enter unique E-mail')
+    })
 })

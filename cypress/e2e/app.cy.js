@@ -23,7 +23,7 @@ describe('Operations on user accounts', () => {
     cy.get('[data-test="password"]')
       .type('123456');
 
-    cy.get('[data-test="confirm-password"]')
+    cy.get('[data-test="confirmpassword"]')
       .type('123456');
     
     cy.get('[data-test="register-button"]')
