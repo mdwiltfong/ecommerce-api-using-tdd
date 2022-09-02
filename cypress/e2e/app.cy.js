@@ -33,3 +33,13 @@ describe('Operations on user accounts', () => {
       .contains('Welcome');
   })
 })
+
+
+describe('Operations on products', () => {
+  it('See a list of products', () => {
+    cy.visit('http://localhost:3000')
+
+    cy.get("[data-test='grey-tshirt-image']")
+      .should('be.visible')
+  })
+})
