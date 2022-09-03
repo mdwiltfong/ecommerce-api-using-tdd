@@ -42,4 +42,6 @@ describe('Operations on products', () => {
     cy.get("[data-test='grey-tshirt-image']")
       .should('be.visible')
   })
+
+  
 })
