@@ -6,5 +6,9 @@ const apiRouter = express.Router();
 const profileRouter = require('../server/routes/profile');
 app.use('/api/profile', profileRouter);
 
+// Import amd Mount the products router
+const productsRouter = require('../server/routes/products')
+app.use('/api/products', productsRouter)
+
 
 module.exports = apiRouter;
