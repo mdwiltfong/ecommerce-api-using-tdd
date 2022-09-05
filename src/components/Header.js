@@ -1,6 +1,4 @@
 import React from 'react'
-import ShoppingCart from '../images/ShoppingCart.png'
-import UserCircle from '../images/UserCircle.png'
 import { Link } from 'react-router-dom'
 
 const Header = () => {
@@ -11,8 +9,8 @@ const Header = () => {
         </div>
         <h1 data-test='main-header'>ShoesMcgees EStore</h1>
         <div className='cart-and-counter'>
-            <Link to='/login'> <img src={UserCircle} className="accounts-image" data-test="accounts-image" alt='' /> </Link>
-            <img src={ShoppingCart} alt='' className='cart-image' data-test='cart-image'/>
+            <Link to='/login'> <img src="/images/UserCircle.png" className="accounts-image" data-test="accounts-image" alt='' /> </Link>
+            <img src="/images/ShoppingCart.png" alt='' className='cart-image' data-test='cart-image'/>
             <div className='cart-counter' data-test='cart-counter'>
                 <p className='cart-counter-number' data-test='cart-counter-number'>0</p>
             </div>

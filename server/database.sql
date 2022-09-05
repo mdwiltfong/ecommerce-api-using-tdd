@@ -22,9 +22,9 @@ CREATE TABLE IF NOT EXISTS products(
 
 
 INSERT INTO products(product_name, unit_price, quantity_small, quantity_med, quantity_large, image1, image2)
-VALUES ('T-Shirt', 35.00, 25, 25, 25, '../src/images/Tshirt.jpg', '../src/images/Greytshirt.png');
+VALUES ('T-Shirt', 35.00, 25, 25, 25, '/images/Tshirt.jpg', '/images/Greytshirt.png');
 INSERT INTO products(product_name, unit_price, quantity_small, quantity_med, quantity_large, image1, image2)
-VALUES ('Hoodie', 49.00, 25, 25, 25, '../src/images/Hoodie.jpg', '../src/images/Greyhoodie.png');   
+VALUES ('Hoodie', 49.00, 25, 25, 25, '/images/Hoodie.jpg', '/images/Greyhoodie.png');   
 
 UPDATE products SET product_description ='<p data-test="p1">So classy it hurts.</p> 
                                           <p data-test="p2">100% combed ring-spun cotton</p> 
