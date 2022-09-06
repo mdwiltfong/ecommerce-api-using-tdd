@@ -34,14 +34,30 @@ describe('Operations on user accounts', () => {
   })
 })
 
-
 describe('Operations on products', () => {
   it('See a list of products', () => {
     cy.visit('http://localhost:3000')
 
     cy.get("[data-test='grey-tshirt-image']")
       .should('be.visible')
+    
+    cy.get("[data-test='grey-hoodie-image']")
+      .should('be.visible')
   })
 
-  
+
+})
+
+describe('Operations on products', () => {
+  it('See product details', () => {
+    cy.visit('http://localhost:3000')
+
+    cy.get("[data-test='grey-tshirt-image']")
+      .click()
+    
+    cy.get("[data-test='p5']")
+      .should('be.visible')
+  })
+
+
 })

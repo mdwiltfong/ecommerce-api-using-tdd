@@ -1,8 +1,29 @@
-import React from 'react'
-import Tshirt from '../images/Tshirt.jpg'
+import React, { useEffect } from 'react'
+import { useParams } from "react-router-dom";
+// import Tshirt from '../images/Tshirt.jpg'
 
-const TshirtPage = () => {
-  
+const ProductPage = () => {
+    
+    const params = useParams();
+    // console.log(params.product)
+    const [productData, setProductData] = React.useState([])
+
+    const getProductData = async () => {
+        try{
+            const response = await fetch(`${process.env.REACT_APP_ORIGIN}/api/products/${params.product}`);
+            const jsonData = await response.json();
+
+            // console.log(jsonData)
+            setProductData(jsonData)
+        } catch (err) {
+            console.error(err.message)
+        }
+    }
+
+    useEffect(() => {
+        getProductData();
+    }, []);
+
     const [formData, setFormData] = React.useState()
 
     const handleSubmit = (event) => {
@@ -14,10 +35,17 @@ const TshirtPage = () => {
         event.preventDefault()
         console.log(formData);
     }
+    
+    const delay = () => {
+        if (productData.length > 0) {
+            console.log(productData.rows[0].image1)
+            return true
+        } 
+    }
 
     return (
     <div className='container'>
-        <img src={Tshirt} className='tshirt' data-test='tshirt-image' alt=''/>
+        {delay() && <img src={productData.rows[0].image1} className='tshirt' data-test='tshirt-image' alt=''/>}
         <div className='specs'>
             <h2 data-test='title'>Classic</h2>
             <p data-test='price'>$35.00</p>
@@ -46,4 +74,4 @@ const TshirtPage = () => {
   )
 }
 
-export default TshirtPage
+export default ProductPage

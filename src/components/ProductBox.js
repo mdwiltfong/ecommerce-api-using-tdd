@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react'
-// import Greytshirt from '../images/Greytshirt.png'
-// import Greyhoodie from '../images/Greyhoodie.png'
+import { Link } from 'react-router-dom'
 
 const ProductBox = () => {
     
+    const [allProductData, setAllProductData] = React.useState([])
     const [tshirtImage, setTshirtImage] = React.useState([]);
     const [hoodieImage, setHoodieImage] = React.useState([])
-    
-    console.log(tshirtImage)
+
+    // console.log(allProductData)
     // console.log(hoodieImage)
     
     const getProductImages = async () => {
@@ -15,9 +15,9 @@ const ProductBox = () => {
             const response = await fetch(`${process.env.REACT_APP_ORIGIN}/api/products`);
             const jsonData = await response.json();
 
-            // console.log(jsonData)
-            setTshirtImage(jsonData[0].image2)
-            setHoodieImage(jsonData[1].image2)
+            setTshirtImage(jsonData[0].image2);
+            setHoodieImage(jsonData[1].image2);
+            setAllProductData(jsonData);
         } catch (err) {
             console.error(err.message)
         }
@@ -27,18 +27,16 @@ const ProductBox = () => {
         getProductImages();
     }, []);
 
-    const handleClick = () => {
-        console.log('Clicked')
+    const delay = () => {
+        if (allProductData.length > 0) {
+            return true
+        } 
     }
-    
-    // let image = <></>
-    // if (tshirtImage) {
-    //     <img onClick={handleClick} alt='' src={require(tshirtImage)} className='grey-tshirt' data-test='grey-tshirt-image'/>
-    // }
+
     return (
     <div className='product-box'>
-        <img onClick={handleClick} alt='' src={tshirtImage} className='grey-tshirt' data-test='grey-tshirt-image'/>
-        <img alt='' src={hoodieImage} className='grey-tshirt' data-test='grey-hoodie-image'/>
+        {delay() && <Link to={`products/${allProductData[0].product_name}`}> <img alt='' src={tshirtImage} className='grey-tshirt' data-test='grey-tshirt-image'/></Link>}
+        {delay() && <Link to={`products/${allProductData[1].product_name}`}> <img alt='' src={hoodieImage} className='grey-tshirt' data-test='grey-hoodie-image'/></Link>}
     </div>
   )
 }

@@ -6,14 +6,24 @@ const queries = require('../queries')
 // GET all product images 
 productsRouter.get('/', async (req, res, next) => {
     try {
-        let images = await pool.query(queries.getImages);
-        res.send(images.rows)
-    console.log(images.rows)
+        const data = await pool.query(queries.getProductsData);
+        res.send(data.rows)
+    console.log(data.rows)
     } catch (err) {
-        console.err(err.message)
+        console.log(err.message)
     }
 })
 
+productsRouter.get('/:id', async (req, res, next) => {
+    try {
+        // console.log(req.params.id)
+        const productData = await pool.query(queries.productData, [req.params.id]);
+        res.send(productData)
+        // console.log(productData)
+    } catch (err) {
+        console.log(err.message)
+    }
+})
 
 
 module.exports = productsRouter;

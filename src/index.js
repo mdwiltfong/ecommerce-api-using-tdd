@@ -5,6 +5,8 @@ import App from './App';
 import Login from './components/Login';
 import Register from './components/Register';
 import ProductBox from './components/ProductBox';
+import ProductPage from './components/ProductPage';
+import Product from './components/Product';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
@@ -16,7 +18,18 @@ root.render(
         <Route path="/" element={<App />}>
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
+          <Route path="products" /*element={<ProductPage />}*/>
+            <Route path=":product" element={<ProductPage />}/>
+          </Route>
           <Route index element={<ProductBox/>} />
+          <Route
+            path="*"
+            element={
+              <main style={{ padding: "1rem" }}>
+                <p>There's nothing here!</p>
+              </main>
+            }
+          />
         </Route>
       </Routes>  
     </BrowserRouter>

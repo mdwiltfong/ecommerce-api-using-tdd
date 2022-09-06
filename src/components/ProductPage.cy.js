@@ -1,9 +1,9 @@
-import TshirtPage from "./TshirtPage";
+import ProductPage from "./ProductPage";
 
 describe('Tshirt Page', () => {
     beforeEach(() => {
         cy.viewport(1920, 1080)
-        cy.mount(<TshirtPage/>)
+        cy.mount(<ProductPage/>)
     })
     it('Tshirt image is rendered', () => {
         cy.get("[data-test='tshirt-image']").should('be.visible')
