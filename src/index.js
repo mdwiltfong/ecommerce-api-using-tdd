@@ -6,7 +6,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import ProductBox from './components/ProductBox';
 import ProductPage from './components/ProductPage';
-import Product from './components/Product';
+// import Product from './components/Product';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 

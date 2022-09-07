@@ -6,14 +6,16 @@ const ProductPage = () => {
     
     const params = useParams();
     // console.log(params.product)
+    
     const [productData, setProductData] = React.useState([])
-
+    // console.log(productData.rows[0].image1)
+    
     const getProductData = async () => {
         try{
             const response = await fetch(`${process.env.REACT_APP_ORIGIN}/api/products/${params.product}`);
             const jsonData = await response.json();
 
-            // console.log(jsonData)
+            console.log(jsonData)
             setProductData(jsonData)
         } catch (err) {
             console.error(err.message)
@@ -38,7 +40,7 @@ const ProductPage = () => {
     
     const delay = () => {
         if (productData.length > 0) {
-            console.log(productData.rows[0].image1)
+            console.log(productData)
             return true
         } 
     }
