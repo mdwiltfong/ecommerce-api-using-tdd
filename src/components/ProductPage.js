@@ -1,32 +1,34 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useParams } from "react-router-dom";
-// import Tshirt from '../images/Tshirt.jpg'
+import { useQuery } from '@tanstack/react-query';
 
 const ProductPage = () => {
     
+    const [formData, setFormData] = React.useState()
+
     const params = useParams();
     // console.log(params.product)
-    
-    const [productData, setProductData] = React.useState([])
-    // console.log(productData.rows[0].image1)
     
     const getProductData = async () => {
         try{
             const response = await fetch(`${process.env.REACT_APP_ORIGIN}/api/products/${params.product}`);
-            const jsonData = await response.json();
-
-            console.log(jsonData)
-            setProductData(jsonData)
+            return response.json();
         } catch (err) {
             console.error(err.message)
         }
     }
 
-    useEffect(() => {
-        getProductData();
-    }, []);
+    const query = useQuery(['products'], getProductData);
 
-    const [formData, setFormData] = React.useState()
+    if(query.status === "loading") {
+        return <div>Loading...</div>
+    }
+
+    if(query.status === "error") {
+        return <div>Error</div>
+    }
+
+    console.log(query.data.rows[0].image2)
 
     const handleSubmit = (event) => {
         console.log(event)
@@ -37,17 +39,10 @@ const ProductPage = () => {
         event.preventDefault()
         console.log(formData);
     }
-    
-    const delay = () => {
-        if (productData.length > 0) {
-            console.log(productData)
-            return true
-        } 
-    }
 
     return (
     <div className='container'>
-        {delay() && <img src={productData.rows[0].image1} className='tshirt' data-test='tshirt-image' alt=''/>}
+        <img src={query.data.rows[0].image1} className='tshirt' data-test='tshirt-image' alt=''/>
         <div className='specs'>
             <h2 data-test='title'>Classic</h2>
             <p data-test='price'>$35.00</p>

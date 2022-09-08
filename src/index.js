@@ -18,9 +18,10 @@ root.render(
         <Route path="/" element={<App />}>
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
-          <Route path="products" /*element={<ProductPage />}*/>
-            <Route path=":product" element={<ProductPage />}/>
-          </Route>
+          <Route path=":product" element={<ProductPage />}/>
+          {/* <Route path="products" element={<ProductPage />}> */}
+            {/* <Route path=":product" element={<ProductPage />}/> */}
+          {/* </Route> */}
           <Route index element={<ProductBox/>} />
           <Route
             path="*"
