@@ -40,17 +40,20 @@ const ProductPage = () => {
         console.log(formData);
     }
 
+    const htmlString = query.data.rows[0].product_description;
+
     return (
     <div className='container'>
         <img src={query.data.rows[0].image1} className='tshirt' data-test='tshirt-image' alt=''/>
         <div className='specs'>
-            <h2 data-test='title'>Classic</h2>
+            <div dangerouslySetInnerHTML={{__html: htmlString}}/>
+            {/* <h2 data-test='title'>Classic</h2>
             <p data-test='price'>$35.00</p>
             <p data-test='p1'>So classy it hurts.</p>
             <p data-test='p2'>100% combed ring-spun cotton</p>
             <p data-test='p3'>Printed on Next Level garment</p>
             <p data-test='p4'>Pre-shrunk</p>
-            <p data-test='p5'>Tear-away label</p>
+            <p data-test='p5'>Tear-away label</p> */}
             <form onSubmit={handleSubmit}>
                 <select
                     data-test='size-drop-down'
