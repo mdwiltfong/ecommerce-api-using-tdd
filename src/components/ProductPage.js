@@ -17,7 +17,7 @@ const ProductPage = () => {
             console.error(err.message)
         }
     }
-
+    
     const query = useQuery(['products'], getProductData);
 
     if(query.status === "loading") {
@@ -26,6 +26,10 @@ const ProductPage = () => {
 
     if(query.status === "error") {
         return <div>Error</div>
+    }
+
+    if(query.data.rows.length === 0) {
+        return <div>Page not found</div>
     }
 
     console.log(query.data.rows[0].image2)

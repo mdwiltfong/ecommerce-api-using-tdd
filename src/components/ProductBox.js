@@ -35,8 +35,8 @@ const ProductBox = () => {
 
     return (
     <div className='product-box'>
-        {delay() && <Link to={`/${allProductData[0].product_name}`}> <img alt='' src={tshirtImage} className='grey-tshirt' data-test='grey-tshirt-image'/></Link>}
-        {delay() && <Link to={`/${allProductData[1].product_name}`}> <img alt='' src={hoodieImage} className='grey-tshirt' data-test='grey-hoodie-image'/></Link>}
+        {delay() && <Link to={`products/${allProductData[0].product_name}`}> <img alt='' src={tshirtImage} className='grey-tshirt' data-test='grey-tshirt-image'/></Link>}
+        {delay() && <Link to={`products/${allProductData[1].product_name}`}> <img alt='' src={hoodieImage} className='grey-tshirt' data-test='grey-hoodie-image'/></Link>}
     </div>
   )
 }
