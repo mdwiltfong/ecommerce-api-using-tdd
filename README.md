@@ -44,9 +44,9 @@ Before anything remember to install all the dependencies using
 npm install
 ```
 
-### Opening the App and Testing Suite
+### Setting up environment variables, Opening the App and Testing Suite
 
-Firstly to avoid having server and front end connection errors you will need add a .env file in the root folder of the React App. Your envoironment variable for the React App should take this format:
+Firstly to avoid having server and front end connection errors you will need add a .env file in the root folder of the React App. Your environment variable for the React App should take this format:
 
 ```
 REACT_APP_ORIGIN=http://localhost:5000
