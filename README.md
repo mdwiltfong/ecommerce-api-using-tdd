@@ -59,7 +59,6 @@ npx cypress open
 ```
 
 ## 🔧 Running the tests <a name = "tests"></a>
-Explain how to run the automated tests for this system.
 
 ### Example end to end tests
 This is an end-to-end test describing the process of a new user creating a new login and adding their credentials, if unique, to the databse. This is a great test to implement as it tests the flow of a user on the happy path, also known as the path which results in a positive result, not only engaging with the front end, but sending a POST request to the server and entering their unique credentials into the databse. This is an excellent test to see if the backend and frontend are working correctly. 
@@ -144,8 +143,6 @@ I am aiming to deploy this API on Heroku.
 
 ## ✍️ Authors <a name = "authors"></a>
 - [@cecmahumane](https://github.com/cecmahumane) - Idea & Initial work
-
-See also the list of [contributors](https://github.com/kylelobo/The-Documentation-Compendium/contributors) who participated in this project.
 
 ## 🎉 Acknowledgements <a name = "acknowledgement"></a>
 - Michael Wiltfong
