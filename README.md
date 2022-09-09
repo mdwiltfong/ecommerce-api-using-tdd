@@ -46,7 +46,23 @@ npm install
 
 ### Opening the App and Testing Suite
 
-First you will need to get the server and the React App up and running. These are set to open simultaneously as per the npm concurrently package. 
+Firstly to avoid having server and front end connection errors you will need add a .env file in the root folder of the React App. Your envoironment variable for the React App should take this format:
+
+```
+REACT_APP_ORIGIN=http://localhost:5000
+```
+
+Secondly to connect to your PostgreSQL Database you will then want to create another .env file inside the server folder. The .env file should contain the following environment variables in this format, but please note that where (*) are used represent your own unique PostgreSQL databse credentials: 
+
+```
+USER=*****
+PASSWORD=*****
+HOST=*****
+DBPORT=****
+DATABASE=ecommerceapi
+```
+
+You will then need to get the server and the React App up and running. These are set to open simultaneously as per the npm concurrently package. 
 
 ```
 npm run dev
