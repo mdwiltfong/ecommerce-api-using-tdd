@@ -6,9 +6,13 @@ const apiRouter = express.Router();
 const profileRouter = require('../server/routes/profile');
 app.use('/api/profile', profileRouter);
 
-// Import and Mount the products router
+// Import and mount the products router
 const productsRouter = require('../server/routes/products');
 app.use('/api/products', productsRouter);
+
+// Import and mount the cart router
+const cartRouter = require('../server/routes/cart');
+app.use('/api/cart')
 
 
 module.exports = apiRouter;

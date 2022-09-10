@@ -29,3 +29,50 @@ describe('Product Page', () => {
     })
 }) 
 
+describe('Product Page', () => {
+    beforeEach(() => {
+        cy.viewport(1920, 1080)
+        cy.mount(<ProductPage/>)
+    })
+    it('Add to cart button sends user info', () => {
+        cy.request({
+            method: 'POST',
+            url: 'http://localhost:5000/api/cart/T-Shirt',
+            body: {
+                size: 'small',
+                productName: 'T-Shirt'
+            }
+        }).then( profile => {
+            expect(profile.status).to.eq(200)
+        })
+    })
+
+    it('Item is added to cart', () => {
+        cy.get("[data-test='add-to-cart']")
+            .should('be.visible')
+        cy.get("[data-test='add-to-cart']")
+            .click()
+        cy.get("[data-test='cart-counter-number']")
+            .contains('1')
+    })
+    it('Size alert is presented when no size is chosen', () => {
+        cy.get("[data-test='drop-down-menu']")
+            .select('Small').should('have.value', 'small')
+        cy.get("[data-test='add-to-cart']")
+            .should('be.visible')
+        cy.get("[data-test='add-to-cart']")
+            .click()
+        cy.get("[data-test='cart-counter-number']")
+            .contains('1')
+    })
+    it('Out of stock alert is presented when chosen size is of 0 quantity in database', () => {
+        cy.get("[data-test='drop-down-menu']")
+            .select('Small').should('have.value', 'small')
+        cy.get("[data-test='add-to-cart']")
+            .should('be.visible')
+        cy.get("[data-test='add-to-cart']")
+            .click()
+        cy.get("[data-test='cart-counter-number']")
+            .contains('1')
+    })
+}) 

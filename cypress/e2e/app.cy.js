@@ -44,8 +44,6 @@ describe('Operations on products', () => {
     cy.get("[data-test='grey-hoodie-image']")
       .should('be.visible')
   })
-
-
 })
 
 describe('Operations on products', () => {
@@ -58,6 +56,22 @@ describe('Operations on products', () => {
     cy.get("[data-test='p5']")
       .should('be.visible')
   })
+})
 
+describe('Operations on products', () => {
+  it('Add item to cart', () => {
+    cy.visit('http://localhost:3000')
 
+    cy.get("[data-test='grey-tshirt-image']")
+      .click()
+    
+    cy.get("[data-test='drop-down-menu']")
+      .select('Small').should('have.value', 'small')
+
+    cy.get("[data-test='add-to-cart']")
+      .click()
+
+    cy.get("[data-test='cart-counter-number']")
+    .contains('1')
+  })
 })

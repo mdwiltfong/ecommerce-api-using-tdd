@@ -3,8 +3,11 @@ import { useParams } from "react-router-dom";
 import { useQuery } from '@tanstack/react-query';
 
 const ProductPage = () => {
-    
-    const [formData, setFormData] = React.useState()
+    const [sizeAlert, setSizeAlert] = React.useState(false)
+    const [productData, setProductData] = React.useState({
+        size: ""
+    })
+    console.log(productData);
 
     const params = useParams();
     // console.log(params.product)
@@ -18,6 +21,12 @@ const ProductPage = () => {
         }
     }
     
+    if(productData.size === "") {
+
+    }
+
+    
+
     const query = useQuery(['products'], getProductData);
 
     if(query.status === "loading") {
@@ -35,13 +44,13 @@ const ProductPage = () => {
     console.log(query.data.rows[0].image2)
 
     const handleSubmit = (event) => {
-        console.log(event)
-        setFormData(event.target.value)
+        event.preventDefault()
+        // console.log(event)
+        // setProductData(event.target.value)
     }
     
     const handleChange = (event) => {
-        event.preventDefault()
-        console.log(formData);
+        setProductData(event.target.value)
     }
 
     const htmlString = query.data.rows[0].product_description;
@@ -51,18 +60,13 @@ const ProductPage = () => {
         <img src={query.data.rows[0].image1} className='tshirt' data-test='tshirt-image' alt=''/>
         <div className='specs'>
             <div dangerouslySetInnerHTML={{__html: htmlString}}/>
-            {/* <h2 data-test='title'>Classic</h2>
-            <p data-test='price'>$35.00</p>
-            <p data-test='p1'>So classy it hurts.</p>
-            <p data-test='p2'>100% combed ring-spun cotton</p>
-            <p data-test='p3'>Printed on Next Level garment</p>
-            <p data-test='p4'>Pre-shrunk</p>
-            <p data-test='p5'>Tear-away label</p> */}
             <form onSubmit={handleSubmit}>
                 <select
+                    id='size'
                     data-test='size-drop-down'
-                    value={formData}
+                    value={productData.size}
                     onChange={handleChange}
+                    name="size"
                     >
                     <option value="">-- Choose Size --</option>
                     <option value="small">Small</option>

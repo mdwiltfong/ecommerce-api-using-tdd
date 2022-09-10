@@ -1,7 +1,7 @@
 const express = require('express');
 const pool = require('../db');
 const productsRouter = express.Router();
-const queries = require('../queries')
+const queries = require('../queries');
 
 // GET all product images 
 productsRouter.get('/', async (req, res, next) => {
