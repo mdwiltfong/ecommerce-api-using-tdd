@@ -11,10 +11,12 @@ describe('Register Form', () => {
     })
 
     it('Profile image is rendered', () => {
-        cy.get("[data-test='profile-image']").should('be.visible')
+        cy.get("[data-test='profile-image']")
+            .should('be.visible')
     })
     it('Register account header is present', () => {
-        cy.get("[data-test='header']").contains('Register a new account below!')
+        cy.get("[data-test='header']")
+            .contains('Register a new account below!')
     })
     it('Username input is rendered', () => {
         cy.get("input[placeholder='E-mail']")
@@ -26,7 +28,8 @@ describe('Register Form', () => {
         cy.get("input[placeholder='Confirm Password']")
     })
     it('Register button is rendered', () => {
-        cy.get("[data-test='register']").contains('Register')
+        cy.get("[data-test='register']")
+        .contains('Register')
     })
 })
 
@@ -61,20 +64,45 @@ describe('Register component functionality', () => {
         cy.mount(<Router>
                     <Register />
                 </Router>)
-        cy.get("[data-test='email']").type('JohnDoe@JDmail.com')
-        cy.get("[data-test='password']").type('123456')
-        cy.get("[data-test='confirmpassword']").type('234567')
-        cy.get("[data-test='register-button']").click()
-        cy.get("[data-test='password-warning']").contains('Please enter matching passwords')
+        cy.get("[data-test='email']")
+            .type('JohnDoe@JDmail.com')
+        cy.get("[data-test='password']")
+            .type('123456')
+        cy.get("[data-test='confirmpassword']")
+            .type('234567')
+        cy.get("[data-test='register-button']")
+            .click()
+        cy.get("[data-test='password-warning']")
+            .contains('Please enter matching passwords')
     })
     it('Rejects improperly formatted E-mail', () => {
         cy.mount(<Router>
                     <Register />
                 </Router>)
-        cy.get("[data-test='email']").type('JohnDoeJDmail.com')
-        cy.get("[data-test='password']").type('123456')
-        cy.get("[data-test='confirmpassword']").type('123456')
-        cy.get("[data-test='register-button']").click()
-        cy.get("[data-test='email-warning']").contains('Please enter valid E-mail')
+        cy.get("[data-test='email']")
+            .type('JohnDoeJDmail.com')
+        cy.get("[data-test='password']")
+            .type('123456')
+        cy.get("[data-test='confirmpassword']")
+            .type('123456')
+        cy.get("[data-test='register-button']")
+            .click()
+        cy.get("[data-test='email-warning']")
+            .contains('Please enter valid E-mail')
+    })
+    it('Rejects repeated E-mail', () => {
+        cy.mount(<Router>
+                    <Register />
+                </Router>)
+        cy.get("[data-test='email']")
+            .type('Cec@cmail.com')
+        cy.get("[data-test='password']")
+            .type('123456')
+        cy.get("[data-test='confirmpassword']")
+            .type('123456')
+        cy.get("[data-test='register-button']")
+            .click()
+        cy.get("[data-test='existing-email-warning']")
+            .contains('Please enter unique E-mail')
     })
 })

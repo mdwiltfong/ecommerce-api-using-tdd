@@ -6,6 +6,7 @@ const Register = () => {
     const navigate = useNavigate();
     const [verifyEmail, setVerifyEmail] = React.useState(false)
     const [verifyPassword, setVerifyPassword] = React.useState(false)
+    const [existingEmail, setExistingEmail] = React.useState(false)
     const [registerData, setRegisterData] = React.useState(
         {
             email: '',
@@ -14,8 +15,6 @@ const Register = () => {
         }
     )
         // console.log(registerData)
-    
-    
 
     const submitData = async (event) => {
         event.preventDefault();
@@ -23,12 +22,14 @@ const Register = () => {
             if(registerData.password === registerData.confirmPassword){
                 try {
                     const body = registerData ;
-                    const response = await fetch("http://localhost:5000/api/profile", {
+                    const response = await fetch(`${process.env.REACT_APP_ORIGIN}/api/profile`, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(body)
                     })
-                    console.log(response)
+                    if(response.status === 409) {
+                        return setExistingEmail(true);
+                    }
                 } catch(err) {
                     console.error(err.message);
                 }
@@ -40,6 +41,11 @@ const Register = () => {
                     }
                     )
                 navigate('/login');
+                if (verifyEmail === true || verifyPassword === true || existingEmail === true) {
+                    setExistingEmail(false)
+                    setVerifyEmail(false)
+                    setVerifyPassword(false)
+                }
                 } else {
                     setVerifyPassword(true);
             }
@@ -96,6 +102,7 @@ const Register = () => {
                 name="remember-me"
                 />
             <label htmlFor='remember-me'>Remember me</label> */}
+            {existingEmail && <p data-test='existing-email-warning' className='existing-email-warning'>Please enter unique E-mail</p>}
             {verifyPassword && <p data-test='password-warning' className='password-warning'>Please enter matching passwords</p>}
             {verifyEmail && <p data-test='email-warning' className='email-warning'>Please enter valid E-mail</p>}
             <br/>

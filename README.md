@@ -1,70 +1,166 @@
-# Getting Started with Create React App
+<p align="center">
+  <a href="" rel="noopener">
+ <img width=200px height=200px src="https://i.imgur.com/6wj0hh6.jpg" alt="Project logo"></a>
+</p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<h3 align="center">Codecademy E-Commerce API</h3>
 
-## Available Scripts
+<div align="center">
 
-In the project directory, you can run:
+  [![GitHub Issues](https://img.shields.io/github/issues/cecmahumane/ecommerce-api-using-tdd)](https://github.com/cecmahumane/ecommerce-api-using-tdd/issues)
+  [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/cecmahumane/ecommerce-api-using-tdd)](https://github.com/cecmahumane/ecommerce-api-using-tdd/pulls)
 
-### `npm start`
+</div>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+<p align="center"> This project is a simple e-commerce API that allows basic CRUD functionality on products, user accounts user carts and orders.
+    <br> 
+</p>
 
-### `npm test`
+## 📝 Table of Contents
+- [About](#about)
+- [Getting Started](#getting_started)
+- [Deployment](#deployment)
+- [Usage](#usage)
+- [Built Using](#built_using)
+- [TODO](../TODO.md)
+- [Contributing](../CONTRIBUTING.md)
+- [Authors](#authors)
+- [Acknowledgments](#acknowledgement)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🧐 About <a name = "about"></a>
+The purpose of this project is to build an e-commerce REST API using our knowledge of server side development.
 
-### `npm run build`
+This project required that I build a fully-functioning e-commerce application REST API that allows users to perform various CRUD operations such as registering an account, browsing products for sale, etc.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🏁 Getting Started <a name = "getting_started"></a>
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Prerequisites
+Before anything remember to install all the dependencies using
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+npm install
+```
 
-### `npm run eject`
+### Setting up environment variables, Opening the App and Testing Suite
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Firstly to avoid having server and front end connection errors you will need add a .env file in the root folder of the React App. Your environment variable for the React App should take this format:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+REACT_APP_ORIGIN=http://localhost:5000
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Secondly to connect to your PostgreSQL Database you will then want to create another .env file inside the server folder. The .env file should contain the following environment variables in this format, but please note that where (*) are used represent your own unique PostgreSQL databse credentials: 
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```
+USER=*****
+PASSWORD=*****
+HOST=*****
+DBPORT=****
+DATABASE=ecommerceapi
+```
 
-## Learn More
+You will then need to get the server and the React App up and running. These are set to open simultaneously as per the npm concurrently package. 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+npm run dev
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Then to get Cypress testing suite running you will need to run
 
-### Code Splitting
+```
+npx cypress open
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 🔧 Running the tests <a name = "tests"></a>
 
-### Analyzing the Bundle Size
+### Example end to end tests
+This is an end-to-end test describing the process of a new user creating a new login and adding their credentials, if unique, to the databse. This is a great test to implement as it tests the flow of a user on the happy path, also known as the path which results in a positive result, not only engaging with the front end, but sending a POST request to the server and entering their unique credentials into the databse. This is an excellent test to see if the backend and frontend are working correctly. 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```
+describe('Operations on user accounts', () => {
+  it('Register for account', () => {
+    cy.visit('http://localhost:3000')
 
-### Making a Progressive Web App
+    cy.get("[data-test='accounts-image']")
+      .should('be.visible')
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+    cy.get('[data-test="accounts-image"]')
+      .click();
 
-### Advanced Configuration
+    cy.get('[data-test="login"]')
+      .contains('No account? Register here');
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+    cy.get('[data-test="no-account"]')
+      .click();
 
-### Deployment
+    cy.get("[data-test='register']")
+      .contains('Register')
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+    cy.get('[data-test="email"]')
+      .type('JohnDoe@JDmail.com');
 
-### `npm run build` fails to minify
+    cy.get('[data-test="password"]')
+      .type('123456');
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+    cy.get('[data-test="confirmpassword"]')
+      .type('123456');
+    
+    cy.get('[data-test="register-button"]')
+      .click();
+    
+    cy.get('[data-test="login"]')
+      .contains('Welcome');
+  })
+})
+```
+
+### And component tests
+These tests test the functionality of the components and the functionality surrounding the happy path. These may also test the "sad paths" also known as the cases where the registration was not able to be completed. Completion of the regisstration can be halted to due to a variety of factors such as incorrect format of email addresses, non-matching passwords or trying to register with an email that already exists.
+
+```
+describe('Register button functionality', () => {
+    beforeEach(() => {
+        cy.viewport(1920, 1080)
+        cy.mount(<Router>
+                    <Register />
+                </Router>)
+    })
+    it('Register button sends user info', () => {
+        cy.request({
+            method: 'POST',
+            url: 'http://localhost:5000/api/profile',
+            body: {
+                email: 'JohnDoe@jdmail.com',
+                password: '123456',
+                confirmPassword: '123456'
+            }
+        }).then( profile => {
+            expect(profile.status).to.eq(200)
+        })
+    })
+  })
+```
+
+## 🎈 Usage <a name="usage"></a>
+Feel free to click through the e-commerce store like you would any online shop. As of now the functionality is limited to registering your user credentials to the databse and looking at products from the main page.
+
+## 🚀 Deployment <a name = "deployment"></a>
+I am aiming to deploy this API on Heroku.
+
+## ⛏️ Built Using <a name = "built_using"></a>
+- [PostgreSQL](https://www.mongodb.com/) - Database
+- [ExpressJs](https://expressjs.com/) - Server Framework
+- [ReactJs](https://vuejs.org/) - Web Framework
+- [NodeJs](https://nodejs.org/en/) - Server Environment
+- [Cypress](https://www.cypress.io/) - Testing Suite
+
+## ✍️ Authors <a name = "authors"></a>
+- [@cecmahumane](https://github.com/cecmahumane) - Idea & Initial work
+
+## 🎉 Acknowledgements <a name = "acknowledgement"></a>
+- Michael Wiltfong
+- Frank Davies
+- @crespo from the Remix discord

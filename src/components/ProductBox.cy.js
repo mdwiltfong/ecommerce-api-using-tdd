@@ -13,11 +13,5 @@ describe('ProductBox', () => {
         cy.mount(<ProductBox />)
         cy.get("[data-test='grey-hoodie-image']").should('be.visible')
     })
-    it('Tshirt should support onClick', () => {
-        cy.mount(<ProductBox />)
-        const handleClickSpy = cy.spy().as('handleClickSpy')
-        cy.mount(<img data-test='grey-tshirt-image' alt="" onClick={handleClickSpy}/>)
-        cy.get("[data-test='grey-tshirt-image']").click();
-        cy.get('@handleClickSpy').should('have.been.called')
-    })
+    
 })
