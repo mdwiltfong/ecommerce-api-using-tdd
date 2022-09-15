@@ -1,6 +1,6 @@
 import { loginPage } from "../support/page_objects/LoginPage";
 import { registrationPage } from "../support/page_objects/RegistrationPage";
-
+import { homePage } from "../support/page_objects/homePage";
 describe("Operations on user accounts", () => {
   beforeEach(() => {
     cy.visit("/");
@@ -14,7 +14,10 @@ describe("Operations on user accounts", () => {
     registrationPage.visit();
     cy.get("h2").should("have.text", "Register a new  account below!");
     registrationPage.registerTestUser();
+    const banner = homePage.getSuccessfulLoginBanner();
+    banner.should("be.visible");
   });
+
   it.skip("User can navigate to registration page from LoginPage and register", () => {
     cy.visit("http://localhost:3000");
 
@@ -29,4 +32,5 @@ describe("Operations on user accounts", () => {
     cy.get("[data-test='register']").contains("Register");
 
     cy.get('[data-test="email"]').type("JohnDoe@JDmail.com");
-    }
+  });
+});
