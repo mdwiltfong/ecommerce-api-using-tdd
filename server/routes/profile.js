@@ -42,25 +42,3 @@ profileRouter.post('/', async (req, res, next) => {
 })
 
 module.exports = profileRouter;
-
-
-
-// try {
-//     let { email, password, confirmPassword } = req.body;
-//     const hash = await bcrypt.hash(password, 10);
-//     // console.log({
-//     //     email,
-//     //     password,
-//     //     confirmPassword,
-//     //     hash
-//     // });
-    
-//     const newEmail = await pool.query(
-//         queries.insertLogin,
-//         [email, hash]
-//     );
-//     res.status(200).json(newEmail)
-// } catch (err) {
-//     console.log(err);
-//     res.status(500).send('Internal server error!');
-// }
