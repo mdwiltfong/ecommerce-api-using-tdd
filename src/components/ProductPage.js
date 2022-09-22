@@ -1,16 +1,19 @@
 import React from 'react'
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from '@tanstack/react-query';
 
 const ProductPage = () => {
+    const params = useParams();
+    // console.log(params)
+    
+    const navigate = useNavigate();
     const [sizeAlert, setSizeAlert] = React.useState(false)
     const [productData, setProductData] = React.useState({
-        size: ""
+        size: "",
+        quantity: 1,
+        productName: params.product 
     })
     console.log(productData);
-
-    const params = useParams();
-    // console.log(params.product)
     
     const getProductData = async () => {
         try{
@@ -21,11 +24,29 @@ const ProductPage = () => {
         }
     }
     
+    const addToCart = async () => {
+        try{
+            const body = productData;
+            const response = await fetch(`${process.env.REACT_APP_ORIGIN}/api/cart/${params.product}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body)
+            })
+            if(response.status === 201) {
+                console.log("Item successfully added to cart")
+            }
+        } catch (err) {
+            console.error(err.message)
+        }
+    }
+
     if(productData.size === "") {
 
     }
 
-    
+    if(!('product' in params)) {
+        navigate('/');
+    }
 
     const query = useQuery(['products'], getProductData);
 
@@ -41,16 +62,21 @@ const ProductPage = () => {
         return <div>Page not found</div>
     }
 
-    console.log(query.data.rows[0].image2)
+    // console.log(query.data.rows[0].image2)
 
     const handleSubmit = (event) => {
         event.preventDefault()
         // console.log(event)
         // setProductData(event.target.value)
     }
-    
+
     const handleChange = (event) => {
-        setProductData(event.target.value)
+        setProductData(prevProductData => {
+            return {
+                ...prevProductData,
+                [event.target.name]: event.target.value
+            }
+        })
     }
 
     const htmlString = query.data.rows[0].product_description;
@@ -75,7 +101,7 @@ const ProductPage = () => {
                 </select>
                 <br/>
                 <br/>
-                <button data-test='add-to-cart'>Add to Cart</button>
+                <button data-test='add-to-cart' onClick={addToCart}>Add to Cart</button>
             </form>
         </div>
     </div>

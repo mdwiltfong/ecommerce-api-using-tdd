@@ -14,12 +14,13 @@ productsRouter.get('/', async (req, res, next) => {
     }
 })
 
+// GET individual product's details
 productsRouter.get('/:id', async (req, res, next) => {
     try {
         // console.log(req.params.id)
         const productData = await pool.query(queries.productData, [req.params.id]);
         res.send(productData)
-        console.log(productData)
+        // console.log(productData)
     } catch (err) {
         console.log(err.message)
     }

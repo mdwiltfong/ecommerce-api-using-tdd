@@ -10,12 +10,9 @@ app.use("/api/profile", profileRouter);
 const productsRouter = require("../server/routes/products");
 app.use("/api/products", productsRouter);
 
-// Import and mount the cart router
-const cartRouter = require("../server/routes/cart");
-/*
-TODO: Hey Cecil don't forget about this middleware
-app.use("/api/cart");
+// // Import and mount the cart router
+// const cartRouter = require("../server/routes/cart");
+// app.use("/api/cart", cartRouter);
 
-*/
 
 module.exports = apiRouter;
