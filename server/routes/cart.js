@@ -16,14 +16,19 @@ cartRouter.post('/:id', async (req, res, next) => {
     } catch (err) {
         console.log(err.message)
     }
+
+    // This needs to be for a given user, thus needs a user_id. 
+    // Checks the cart for the existence of product so as to add to quantity if it exists
+    // If it doesnt exist then a new entry is created.  
     try {
         const checkCart = await pool.query(queries.checkExists, [productId]);
         if (checkCart.rows.length) {
-            
+
         }
     } catch (err) {
         console.log(err.message)
     }
+    // 
 })
 
 module.exports = cartRouter

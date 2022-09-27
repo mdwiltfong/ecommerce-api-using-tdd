@@ -1,6 +1,18 @@
 const express = require("express");
 const app = require("../server");
 const apiRouter = express.Router();
+const session = require ("express-session")
+
+
+app.use(
+    session({
+        store: new (require('connect-pg-simple')(session))({
+            // Insert connect-pg-simple options here
+          }),
+        secret: "Key that will sign cookie",
+        resave: false,
+        saveUninitialized: false
+}))
 
 // Import and mount the profile router
 const profileRouter = require("../server/routes/profile");
