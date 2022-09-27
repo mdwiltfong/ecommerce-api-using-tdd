@@ -33,7 +33,8 @@ profileRouter.post('/', async (req, res, next) => {
             queries.insertLogin,
             [email, hash]
         );
-        res.status(200).json(newEmail)
+        req.session.isAuth = true;
+        res.status(200).json(newEmail);
     } catch (err) {
         console.log(err);
         res.status(500).send('Internal server error!');

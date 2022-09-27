@@ -19,6 +19,18 @@ CREATE TABLE IF NOT EXISTS products(
     image2 VARCHAR(255)
 );
 
+CREATE TABLE IF NOT EXISTS "session" (
+  "sid" varchar NOT NULL COLLATE "default",
+  "sess" json NOT NULL,
+  "expire" timestamp(6) NOT NULL
+)
+WITH (OIDS=FALSE);
+
+ALTER TABLE "session" ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+CREATE INDEX "IDX_session_expire" ON "session" ("expire");
+
+
 INSERT INTO products(product_name, unit_price, quantity_small, quantity_med, quantity_large, image1, image2)
 VALUES ('T-Shirt', 35.00, 25, 25, 25, '/images/Tshirt.jpg', '/images/Greytshirt.png');
 INSERT INTO products(product_name, unit_price, quantity_small, quantity_med, quantity_large, image1, image2)

@@ -1,18 +1,32 @@
 const express = require("express");
 const app = require("../server");
 const apiRouter = express.Router();
-const session = require ("express-session")
+const session = require ("express-session");
+const pgSession = require('connect-pg-simple')(session);
+const pg = require('pg');
 
 
-app.use(
-    session({
-        store: new (require('connect-pg-simple')(session))({
-            // Insert connect-pg-simple options here
-          }),
-        secret: "Key that will sign cookie",
-        resave: false,
-        saveUninitialized: false
-}))
+const pgPool = new pg.Pool({
+    user: process.env.USER,
+    password: process.env.PASSWORD,
+    host: process.env.HOST,
+    port: process.env.DBPORT,
+    database: process.env.DATABASE
+    // Insert pool options here
+});
+
+app.use(session({
+    store: new pgSession({
+      pool : pgPool,                // Connection pool
+      tableName : 'session'   // Use another table-name than the default "session" one
+      // Insert connect-pg-simple options here
+    }),
+    secret: process.env.FOO_COOKIE_SECRET,
+    resave: false,
+    cookie: { maxAge: 60 * 60 * 1000 }, // 1 Hour
+    saveUninitialized: false
+    // Insert express-session options here
+  }));
 
 // Import and mount the profile router
 const profileRouter = require("../server/routes/profile");
@@ -28,3 +42,7 @@ app.use("/api/cart", cartRouter);
 
 
 module.exports = apiRouter;
+
+
+
+// saveUninitialized: false
