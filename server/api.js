@@ -23,8 +23,8 @@ app.use(session({
     }),
     secret: process.env.FOO_COOKIE_SECRET,
     resave: false,
-    cookie: { maxAge: 60 * 60 * 1000 }, // 1 Hour
-    saveUninitialized: false
+    cookie: { maxAge: 5 * 60 * 1000 }, // 5 Mins
+    saveUninitialized: false,
     // Insert express-session options here
   }));
 
@@ -42,7 +42,3 @@ app.use("/api/cart", cartRouter);
 
 
 module.exports = apiRouter;
-
-
-
-// saveUninitialized: false

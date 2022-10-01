@@ -33,7 +33,6 @@ profileRouter.post('/', async (req, res, next) => {
             queries.insertLogin,
             [email, hash]
         );
-        req.session.isAuth = true;
         res.status(200).json(newEmail);
     } catch (err) {
         console.log(err);
