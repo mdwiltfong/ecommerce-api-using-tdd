@@ -1,32 +1,33 @@
 const express = require("express");
 const app = require("../server");
 const apiRouter = express.Router();
-const session = require ("express-session");
-const pgSession = require('connect-pg-simple')(session);
-const pg = require('pg');
-
+const session = require("express-session");
+const pgSession = require("connect-pg-simple")(session);
+const pg = require("pg");
 
 const pgPool = new pg.Pool({
-    user: process.env.USER,
-    password: process.env.PASSWORD,
-    host: process.env.HOST,
-    port: process.env.DBPORT,
-    database: process.env.DATABASE
-    // Insert pool options here
+  user: process.env.USER,
+  password: process.env.PASSWORD,
+  host: process.env.HOST,
+  port: process.env.DBPORT,
+  database: process.env.DATABASE,
+  // Insert pool options here
 });
 
-app.use(session({
+app.use(
+  session({
     store: new pgSession({
-      pool : pgPool,                // Connection pool
-      tableName : 'session'   // Use another table-name than the default "session" one
+      pool: pgPool, // Connection pool
+      tableName: "session", // Use another table-name than the default "session" one
       // Insert connect-pg-simple options here
     }),
     secret: process.env.FOO_COOKIE_SECRET,
     resave: false,
-    cookie: { maxAge: 5 * 60 * 1000 }, // 5 Mins
+    cookie: { maxAge: 5 * 60 * 1000,sa }, // 5 Mins
     saveUninitialized: false,
     // Insert express-session options here
-  }));
+  })
+);
 
 // Import and mount the profile router
 const profileRouter = require("../server/routes/profile");
@@ -39,6 +40,5 @@ app.use("/api/products", productsRouter);
 // Import and mount the cart router
 const cartRouter = require("../server/routes/cart");
 app.use("/api/cart", cartRouter);
-
 
 module.exports = apiRouter;

@@ -1,44 +1,61 @@
-const express = require('express');
-const pool = require('../db');
+const express = require("express");
+const pool = require("../db");
 const profileRouter = express.Router();
-const bcrypt = require('bcryptjs');
-const queries = require('../queries')
-const validator = require('validator')
+const bcrypt = require("bcryptjs");
+const queries = require("../queries");
+const validator = require("validator");
 
 //"POST" a hashed password and username
-profileRouter.post('/', async (req, res, next) => {
-    let { email, password, confirmPassword } = req.body;
-    if (!validator.isEmail(email)) {
-        console.log('Enter a valid email')
-    }
+profileRouter.post(
+  "/",
+  async (req, res, next) => {
     try {
-        const emailExists = await pool.query(queries.checkEmailExists, [email])       
-        if (emailExists.rows.length) {
-            return res.status(409).send('Duplicate Email')
-        }
+      const sessionExists = await pool.query(queries.checkSession);
+      console.log(sessionExists.rows);
+      if (!sessionExists.rows.length) {
+        req.session.isAuth = true;
+        const { session } = req;
+        console.log("Session created");
+        // console.log(sessionExists)
+      }
+      console.log("Session exists");
+      const data = await pool.query(queries.getProductsData);
+      res.send(data.rows);
     } catch (err) {
-        console.log(err);
-        res.status(500).send('Internal server error!');
+      console.log(err.message);
     }
-    try {
-        const hash = await bcrypt.hash(password, 10);
-        console.log({
-            email,
-            password,
-            confirmPassword,
-            hash
-        });
-        
-        const newEmail = await pool.query(
-            queries.insertLogin,
-            [email, hash]
-        );
-        res.status(200).json(newEmail);
-    } catch (err) {
-        console.log(err);
-        res.status(500).send('Internal server error!');
+  }
+
+  /* async (req, res, next) => {
+  let { email, password, confirmPassword } = req.body;
+  if (!validator.isEmail(email)) {
+    console.log("Enter a valid email");
+  }
+  try {
+    const emailExists = await pool.query(queries.checkEmailExists, [email]);
+    if (emailExists.rows.length) {
+      return res.status(409).send("Duplicate Email");
     }
-    
-})
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Internal server error!");
+  }
+  try {
+    const hash = await bcrypt.hash(password, 10);
+    console.log({
+      email,
+      password,
+      confirmPassword,
+      hash,
+    });
+
+    const newEmail = await pool.query(queries.insertLogin, [email, hash]);
+    res.status(200).json(newEmail);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Internal server error!");
+  }
+} */
+);
 
 module.exports = profileRouter;
