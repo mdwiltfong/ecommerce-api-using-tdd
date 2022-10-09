@@ -11,14 +11,17 @@ productsRouter.get("/", async (req, res, next) => {
     if (!sessionExists.rows.length) {
       req.session.isAuth = true;
       const { session } = req;
-      console.log("Session created");
+      console.log("Session created", session);
       // console.log(sessionExists)
+    } else {
+      console.log("Session exists");
     }
-    console.log("Session exists");
+
     const data = await pool.query(queries.getProductsData);
     return res.send(data.rows);
   } catch (err) {
     console.log(err.message);
+    next(err);
   }
 });
 

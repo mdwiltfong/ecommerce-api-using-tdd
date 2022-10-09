@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-
+import axios from "axios";
 const ProductBox = () => {
   const [allProductData, setAllProductData] = React.useState([]);
   const [tshirtImage, setTshirtImage] = React.useState([]);
@@ -11,10 +11,14 @@ const ProductBox = () => {
 
   const getProductImages = async () => {
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_ORIGIN}/api/products`
+      const response = await axios.get(
+        `${process.env.REACT_APP_ORIGIN}/api/products`,
+        {
+          withCredentials: true,
+        }
       );
-      const jsonData = await response.json();
+
+      const { data: jsonData } = response;
 
       setTshirtImage(jsonData[0].image2);
       setHoodieImage(jsonData[1].image2);
