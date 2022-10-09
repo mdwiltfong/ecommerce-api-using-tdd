@@ -1,9 +1,11 @@
 const express = require("express");
-const app = require("../server");
-const apiRouter = express.Router();
+const app = express();
 const session = require("express-session");
 const pgSession = require("connect-pg-simple")(session);
 const pg = require("pg");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
 const pgPool = new pg.Pool({
   user: process.env.USER,
@@ -13,7 +15,12 @@ const pgPool = new pg.Pool({
   database: process.env.DATABASE,
   // Insert pool options here
 });
-
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+//Add middleware for parsing request bodies
+app.use(bodyParser.json());
 app.use(
   session({
     store: new pgSession({
@@ -23,7 +30,7 @@ app.use(
     }),
     secret: process.env.FOO_COOKIE_SECRET,
     resave: false,
-    cookie: { maxAge: 5 * 60 * 1000,sa }, // 5 Mins
+    cookie: { maxAge: 5 * 60 * 1000 }, // 5 Mins
     saveUninitialized: false,
     // Insert express-session options here
   })
@@ -41,4 +48,4 @@ app.use("/api/products", productsRouter);
 const cartRouter = require("../server/routes/cart");
 app.use("/api/cart", cartRouter);
 
-module.exports = apiRouter;
+module.exports = app;
