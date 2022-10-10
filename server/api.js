@@ -5,7 +5,9 @@ const pgSession = require("connect-pg-simple")(session);
 const pg = require("pg");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
+// const cookieParser = require("cookie-parser");
+const pool = require("./db");
+const queries = require("./queries")
 
 const pgPool = new pg.Pool({
   user: process.env.USER,
@@ -15,15 +17,17 @@ const pgPool = new pg.Pool({
   database: process.env.DATABASE,
   // Insert pool options here
 });
+
 app.use(
   cors({
     origin: "http://localhost:3000",
     credentials: true,
   })
 );
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
+// app.use(cookieParser());
 //Add middleware for parsing request bodies
 app.use(bodyParser.json());
 app.use(
@@ -40,6 +44,23 @@ app.use(
     // Insert express-session options here
   })
 );
+
+app.use((req, res, next) => {
+  pool.query(queries.checkSession)
+    .then((sessionExists) => {
+      console.log(sessionExists.rows);
+      if (!sessionExists.rows.length) {
+        req.session.isAuth = true;
+        const { session } = req;
+        console.log("Session created", session);
+        // console.log(sessionExists)
+      } else {
+        console.log("Session exists");
+      }
+      next();
+  });
+})
+
 
 // Import and mount the profile router
 const profileRouter = require("../server/routes/profile");
