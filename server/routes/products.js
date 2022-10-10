@@ -6,17 +6,6 @@ const queries = require("../queries");
 // GET all product images
 productsRouter.get("/", async (req, res, next) => {
   try {
-//     const sessionExists = await pool.query(queries.checkSession);
-//     console.log(sessionExists.rows);
-//     if (!sessionExists.rows.length) {
-//       req.session.isAuth = true;
-//       const { session } = req;
-//       console.log("Session created", session);
-//       // console.log(sessionExists)
-//     } else {
-//       console.log("Session exists");
-//     }
-
     const data = await pool.query(queries.getProductsData);
     return res.send(data.rows);
   } catch (err) {
