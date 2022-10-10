@@ -7,7 +7,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 // const cookieParser = require("cookie-parser");
 const pool = require("./db");
-const queries = require("./queries")
+const queries = require("./queries");
 
 const pgPool = new pg.Pool({
   user: process.env.USER,
@@ -46,7 +46,7 @@ app.use(
 );
 
 app.use((req, res, next) => {
-  pool.query(queries.checkSession)
+  pool.query(queries.sessionQueries.checkSession)
     .then((sessionExists) => {
       console.log(sessionExists.rows);
       if (!sessionExists.rows.length) {
@@ -58,7 +58,7 @@ app.use((req, res, next) => {
         console.log("Session exists");
       }
       next();
-  });
+    });
 })
 
 
