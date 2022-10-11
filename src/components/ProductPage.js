@@ -1,6 +1,7 @@
 import React from 'react'
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from '@tanstack/react-query';
+import axios from "axios";
 
 const ProductPage = () => {
     const params = useParams();
@@ -17,8 +18,12 @@ const ProductPage = () => {
     
     const getProductData = async () => {
         try{
-            const response = await fetch(`${process.env.REACT_APP_ORIGIN}/api/products/${params.product}`);
-            return response.json();
+            const response = await axios.get(`${process.env.REACT_APP_ORIGIN}/api/products/${params.product}`,
+            {
+                withCredentials: true,
+              });
+              console.log(response);
+            return response.data;
         } catch (err) {
             console.error(err.message)
         }

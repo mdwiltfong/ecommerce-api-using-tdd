@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import validator from "validator";
+import axios from "axios";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -20,14 +21,7 @@ const Register = () => {
       if (registerData.password === registerData.confirmPassword) {
         try {
           const body = registerData;
-          const response = await fetch(
-            `${process.env.REACT_APP_ORIGIN}/api/profile`,
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(body),
-            }
-          );
+          const response = await axios.post(`${process.env.REACT_APP_ORIGIN}/api/profile`, body, {withCredentials: true});
           if (response.status === 409) {
             return setExistingEmail(true);
           }
@@ -39,7 +33,7 @@ const Register = () => {
           password: "",
           confirmPassword: "",
         });
-        /*  navigate('/login'); */
+        navigate('/login');
         if (
           verifyEmail === true ||
           verifyPassword === true ||
