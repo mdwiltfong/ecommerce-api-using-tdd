@@ -15,6 +15,21 @@ const Register = () => {
   });
   // console.log(registerData)
 
+  const getSessionData = async () => {
+    try{
+        const response = await axios.get(`${process.env.REACT_APP_ORIGIN}/api/session/`,
+        {
+            withCredentials: true,
+          });
+          console.log(response);
+        return response.data;
+    } catch (err) {
+        console.error(err.message)
+    }
+  }
+
+  getSessionData();
+
   const submitData = async (event) => {
     event.preventDefault();
     if (validator.isEmail(registerData.email)) {

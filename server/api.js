@@ -74,4 +74,8 @@ app.use("/api/products", productsRouter);
 const cartRouter = require("../server/routes/cart");
 app.use("/api/cart", cartRouter);
 
+// Import and mount the session router
+const sessionRouter = require("../server/routes/session");
+app.use("/api/session", sessionRouter);
+
 module.exports = app;
