@@ -22,7 +22,7 @@ const ProductPage = () => {
             {
                 withCredentials: true,
               });
-              console.log(response);
+            //   console.log(response);
             return response.data;
         } catch (err) {
             console.error(err.message)
@@ -33,26 +33,19 @@ const ProductPage = () => {
         try{
             const body = productData;
             if (body.size === "") {
-                setSizeAlert(true);
+                return setSizeAlert(true);
             }
-            const response = await axios.post(`${process.env.REACT_APP_ORIGIN}/api/cart/${params.product}`, body, {withCredentials: true})
-            if(response.status === 201) {
-                console.log("Item successfully added to cart")
-            }
+            setSizeAlert(false);
+            const response = await axios.post(`${process.env.REACT_APP_ORIGIN}/api/cart`, body, {withCredentials: true});
+            // if(response.status === 201) {
+            //     console.log("Item successfully added to cart");
+            //     console.log(response)
+            // }
+            console.log(response)
         } catch (err) {
             console.error(err.message)
         }
     }
-
-
-    // try {
-    //     const response = await axios.post(`${process.env.REACT_APP_ORIGIN}/api/profile`, body, {withCredentials: true});
-    //     if (response.status === 409) {
-    //       return setExistingEmail(true);
-    //     }
-    //   } catch (err) {
-    //     console.error(err.message);
-    //   }
 
     if(productData.size === "") {
 

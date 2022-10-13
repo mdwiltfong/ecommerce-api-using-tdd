@@ -4,17 +4,24 @@ const cartRouter = express.Router();
 const queries = require('../queries');
 
 // Add Item(s) to cart
-cartRouter.post('/:id', async (req, res, next) => {
+cartRouter.post('/', async (req, res, next) => {
     let productId = 0;
     const { size, quantity, productName } = req.body
     // console.log(req.body)
+    let cartProduct = {
+        name: productName, 
+        size: size,
+        quantity: quantity
+    };
     try {
-        const getItemId = await pool.query(queries.productId, [productName]);
-        // console.log(getItemId.rows[0].id)
-        productId = getItemId.rows[0].id;
-        console.log(productId)
+        if (req.session.cart === undefined) {
+            req.session.cart = cartProduct;
+            const addCartItem = await pool.query(queries.sessionQueries.addSessionCartItem, [req.session]);
+            console.log(addCartItem);
+            return res.status(201).send(req.session);
+        };
     } catch (err) {
-        console.log(err.message)
+        console.log(err.message);
     }
 
     // This needs to be for a given user, thus needs a user_id. 
@@ -26,7 +33,7 @@ cartRouter.post('/:id', async (req, res, next) => {
 
         }
     } catch (err) {
-        console.log(err.message)
+        console.log(err.message);
     }
     // 
 })
