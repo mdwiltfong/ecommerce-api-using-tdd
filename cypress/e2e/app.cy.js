@@ -1,6 +1,7 @@
 import { loginPage } from "../support/page_objects/LoginPage";
 import { registrationPage } from "../support/page_objects/RegistrationPage";
 import { homePage } from "../support/page_objects/homePage";
+
 describe("Operations on user accounts", () => {
   beforeEach(() => {
     cy.visit("/");

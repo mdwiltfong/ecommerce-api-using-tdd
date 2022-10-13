@@ -8,7 +8,7 @@ const ProductPage = () => {
     // console.log(params)
     
     const navigate = useNavigate();
-    // const [sizeAlert, setSizeAlert] = React.useState(false)
+    const [sizeAlert, setSizeAlert] = React.useState(false);
     const [productData, setProductData] = React.useState({
         size: "",
         quantity: 1,
@@ -32,11 +32,10 @@ const ProductPage = () => {
     const addToCart = async () => {
         try{
             const body = productData;
-            const response = await fetch(`${process.env.REACT_APP_ORIGIN}/api/cart/${params.product}`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(body)
-            })
+            if (body.size === "") {
+                setSizeAlert(true);
+            }
+            const response = await axios.post(`${process.env.REACT_APP_ORIGIN}/api/cart/${params.product}`, body, {withCredentials: true})
             if(response.status === 201) {
                 console.log("Item successfully added to cart")
             }
@@ -44,6 +43,16 @@ const ProductPage = () => {
             console.error(err.message)
         }
     }
+
+
+    // try {
+    //     const response = await axios.post(`${process.env.REACT_APP_ORIGIN}/api/profile`, body, {withCredentials: true});
+    //     if (response.status === 409) {
+    //       return setExistingEmail(true);
+    //     }
+    //   } catch (err) {
+    //     console.error(err.message);
+    //   }
 
     if(productData.size === "") {
 
@@ -106,6 +115,10 @@ const ProductPage = () => {
                 </select>
                 <br/>
                 <br/>
+                {sizeAlert && <div>
+                    <p data-test='size-alert' className='size-alert'>Please choose a size</p>
+                    <br/>
+                </div>}
                 <button data-test='add-to-cart' onClick={addToCart}>Add to Cart</button>
             </form>
         </div>

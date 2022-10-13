@@ -62,8 +62,8 @@ describe('Product Page', () => {
             .should('be.visible')
         cy.get("[data-test='add-to-cart']")
             .click()
-        cy.get("[data-test='cart-counter-number']")
-            .contains('1')
+        cy.get("[data-test='size-alert']")
+            .contains('Please choose a size')
     })
     it('Out of stock alert is presented when chosen size is of 0 quantity in database', () => {
         cy.get("[data-test='drop-down-menu']")
