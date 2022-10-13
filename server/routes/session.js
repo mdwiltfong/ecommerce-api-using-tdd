@@ -6,7 +6,7 @@ const sessionRouter = express.Router();
 sessionRouter.get("/", async (req, res, next) => {
     try {
         console.log("Session fetched from session route");
-        res.status(200);
+        res.sendStatus(200);
     } catch (err) {
         console.log(err.message);
     }

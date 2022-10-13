@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
 import validator from "validator";
 import axios from "axios";
@@ -16,19 +16,24 @@ const Register = () => {
   // console.log(registerData)
 
   const getSessionData = async () => {
+    console.log("call entered")
     try{
-        const response = await axios.get(`${process.env.REACT_APP_ORIGIN}/api/session/`,
+        const response = await axios.get(`${process.env.REACT_APP_ORIGIN}/api/session`,
         {
-            withCredentials: true,
+            withCredentials: true
           });
+          console.log("register component Session")
           console.log(response);
         return response.data;
     } catch (err) {
         console.error(err.message)
     }
-  }
+  };
 
-  getSessionData();
+  useEffect(() => {
+    getSessionData();
+    console.log("getSession run")
+  }, []);
 
   const submitData = async (event) => {
     event.preventDefault();
