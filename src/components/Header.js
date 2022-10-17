@@ -1,7 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const Header = () => {
+const Header = (props) => {
+  console.log(props.cartInfo)
+  var quantity = 0;
+  try {
+    quantity = props.cartInfo.data.cart.quantity;
+
+  } catch (error) {
+    
+  }
   return (
     <div className='header'>
         <Link to='/'><div className='logo'>
@@ -12,7 +20,7 @@ const Header = () => {
             <Link to='/login'> <img src="/images/UserCircle.png" className="accounts-image" data-test="accounts-image" alt='' /> </Link>
             <img src="/images/ShoppingCart.png" alt='' className='cart-image' data-test='cart-image'/>
             <div className='cart-counter' data-test='cart-counter'>
-                <p className='cart-counter-number' data-test='cart-counter-number'>0</p>
+                <p className='cart-counter-number' data-test='cart-counter-number'>{quantity}</p>
             </div>
         </div>
     </div>
