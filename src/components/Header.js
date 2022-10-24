@@ -3,10 +3,32 @@ import { Link } from 'react-router-dom'
 
 const Header = (props) => {
   console.log(props.cartInfo)
-  var quantity = 0;
-  try {
-    quantity = props.cartInfo.data.cart.quantity;
+  var totalItems = 0;
 
+  try {
+
+    let quantity = (size) => {
+      for (const property in size) {
+        console.log(size[property]);
+        totalItems += size[property];
+      }
+    };
+    
+    let itemSize = (id) => {
+      for (const property in id) {
+        // console.log(id[property])
+         quantity(id[property])
+      }
+    };
+    
+    let itemId = (carts) => {
+      for (const productId in carts) {
+        // console.log(carts[productId])
+        itemSize(carts[productId])
+      }
+    };
+   
+    itemId(props.cartInfo.data.cart);
   } catch (error) {
     
   }
@@ -20,7 +42,7 @@ const Header = (props) => {
             <Link to='/login'> <img src="/images/UserCircle.png" className="accounts-image" data-test="accounts-image" alt='' /> </Link>
             <img src="/images/ShoppingCart.png" alt='' className='cart-image' data-test='cart-image'/>
             <div className='cart-counter' data-test='cart-counter'>
-                <p className='cart-counter-number' data-test='cart-counter-number'>{quantity}</p>
+                <p className='cart-counter-number' data-test='cart-counter-number'>{totalItems}</p>
             </div>
         </div>
     </div>

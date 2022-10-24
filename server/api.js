@@ -48,14 +48,14 @@ app.use(
 app.use((req, res, next) => {
   pool.query(queries.sessionQueries.checkSession)
     .then((sessionExists) => {
-      console.log(sessionExists.rows);
+      // console.log(sessionExists.rows);
       if (!sessionExists.rows.length) {
         req.session.isAuth = true;
         const { session } = req;
-        console.log("Session created", session);
+        // console.log("Session created", session);
         // console.log(sessionExists)
       } else {
-        console.log("Session exists");
+        // console.log("Session exists");
       }
       next();
     });

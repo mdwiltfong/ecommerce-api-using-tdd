@@ -29,7 +29,44 @@ const ProductPage = (props) => {
             console.error(err.message)
         }
     }
-    
+
+    // let cart = {id1:
+    //     { 
+    //       small: {
+    //         quantity: 1
+    //       },
+    //       medium: {
+    //         quantity: 2
+    //       }
+    //     },
+    //     id2:
+    //     {
+    //       large: {
+    //         quantity:3
+    //       }
+    //     }
+    //   }
+
+//       let newItem = 
+//       {
+//         [productId]: {
+//             [productData.size]: {
+//                 quantity: [productData.quantity]
+//             }
+//         }
+//       };
+// let updatedCart = {...cart, ...newItem}
+
+// let totalItems = 0;        
+// for (let i = 0; i < cart.length; i++) {
+// let unitCount = 0;
+// totalItems += unitCount;
+// for (let j = 0; j < cart.id.length; j++) {
+//   unitCount += cart[i][j].quantity;
+// }
+// console.log(totalItems);
+// }
+
     const addToCart = async () => {
         try {
             const body = productData;
@@ -37,14 +74,33 @@ const ProductPage = (props) => {
                 return setSizeAlert(true);
             }
             setSizeAlert(false);
-            // addProductToCart();
-            const response = await axios.post(`${process.env.REACT_APP_ORIGIN}/api/cart`, body, { withCredentials: true });
-            if(response.status === 201) {
-                console.log("Item successfully added to cart");
-                console.log(response)
+            if (!sessCart) {
+            const newItemResponse = await axios.post(`${process.env.REACT_APP_ORIGIN}/api/cart`, body, { withCredentials: true });
+            if(newItemResponse.status === 201) {
+                console.log("First item successfully added to cart");
+                // console.log(newItemResponse)
             }
-            console.log(response);
-            setSessCart(response);
+            console.log(newItemResponse);
+            return setSessCart(newItemResponse);
+            }
+            const response = await axios.get(`${process.env.REACT_APP_ORIGIN}/api/products/${params.product}`,
+                {
+                    withCredentials: true,
+                });
+            let productId = response.data.rows.id;
+            for (let i = 0; i < sessCart.data.cart.length; i++) {
+                if (sessCart.data.cart[i] !== productId) {
+                    const newItemResponse = await axios.post(`${process.env.REACT_APP_ORIGIN}/api/cart`, body, { withCredentials: true });
+                    if(newItemResponse.status === 201) {
+                        console.log("New item successfully added to cart");
+                    }; 
+                console.log(newItemResponse);
+                return setSessCart(newItemResponse);
+                };
+            };
+            // const existingItemResponse = await axios.put(`${process.env.REACT_APP_ORIGIN}/api/cart/${params.product}`, sessCart, { withCredentials: true });
+            // console.log(existingItemResponse);
+            // setSessCart(existingItemResponse);
         } catch (err) {
             console.error(err.message);
         }
