@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const Header = (props) => {
-  console.log(props.cartInfo)
+  // console.log(props.cartInfo)
   var totalItems = 0;
 
   try {

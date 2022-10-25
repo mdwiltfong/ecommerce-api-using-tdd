@@ -10,7 +10,7 @@ const queryClient = new QueryClient()
 
 function App() {
   const [sessCart, setSessCart] = React.useState("");
-  console.log(sessCart);
+  // console.log(sessCart);
 
 
   return (
