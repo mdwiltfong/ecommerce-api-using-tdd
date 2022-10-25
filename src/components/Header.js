@@ -9,21 +9,18 @@ const Header = (props) => {
 
     let quantity = (size) => {
       for (const property in size) {
-        console.log(size[property]);
         totalItems += size[property];
       }
     };
     
     let itemSize = (id) => {
       for (const property in id) {
-        // console.log(id[property])
          quantity(id[property])
       }
     };
     
     let itemId = (carts) => {
       for (const productId in carts) {
-        // console.log(carts[productId])
         itemSize(carts[productId])
       }
     };
