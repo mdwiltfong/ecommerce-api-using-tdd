@@ -11,7 +11,7 @@ class usersQueriesClass{
 class productsQueriesClass{
     getProductsData = "SELECT * FROM products";
     productData = "SELECT * FROM products WHERE products.product_name = $1";
-    // productId = "SELECT products.id FROM products WHERE products.product_name = $1";
+    matchProductId = "SELECT * FROM products WHERE products.id = ANY ($1)";
 }
 
 class usersProductsQueriesClass{

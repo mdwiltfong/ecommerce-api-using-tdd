@@ -6,6 +6,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import ProductBox from './components/ProductBox';
 import ProductPage from './components/ProductPage';
+import ShoppingCart from './components/ShoppingCart';
 // import Product from './components/Product';
 // import Redirect from './components/Redirect';
 import reportWebVitals from './reportWebVitals';
@@ -18,6 +19,7 @@ root.render(
       <Routes>
         <Route path="/" element={<App />}>
           <Route path="login" element={<Login />} />
+          <Route path="cart" element={<ShoppingCart />} />
           <Route path="register" element={<Register />} />
           {/* <Route path=":product" element={<ProductPage />}/> */}
           <Route path="products" element={<ProductPage />}>
