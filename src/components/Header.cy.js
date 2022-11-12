@@ -37,20 +37,3 @@ describe('Cart icon functionality', () => {
     cy.get("[data-test='cart-counter-number']").contains('0')
   })
 })
-
-// describe('Accounts image functionality', () => {
-//   beforeEach(() => {
-//     cy.viewport(1920, 1080)
-//   })
-//   it('Accounts image clicked renders login', () => {
-//     cy.mount(<Header />)
-
-//     cy.get("[data-test='accounts-image']")
-//       .click()
-    
-//     cy.mount(<Login/>)
-
-//     cy.get("[data-test='profile-image']")
-//       .should('be.visible')
-//   })
-// })

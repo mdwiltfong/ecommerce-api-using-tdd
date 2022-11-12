@@ -39,7 +39,7 @@ app.use(
     }),
     secret: process.env.FOO_COOKIE_SECRET,
     resave: false,
-    cookie: { maxAge: 5 * 60 * 1000 }, // 5 Mins
+    cookie: { maxAge: 60 * 60 * 1000 }, // 60 Mins
     saveUninitialized: false,
     // Insert express-session options here
   })

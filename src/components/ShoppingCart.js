@@ -1,38 +1,39 @@
 import React, { useEffect } from 'react'
+import CartItem from './CartItem';
 import { useOutletContext } from 'react-router-dom'
 import axios from 'axios';
+import { nanoid } from 'nanoid';
 
 const ShoppingCart = () => {
     const [sessCart, setSessCart] = useOutletContext();
-    const [cartArray, setCartArray] = React.useState([]);
-    const [matchedProductData, setMatchedProductData] = React.useState();
+    // const [cartArray, setCartArray] = React.useState([]);
+    const [finalOutput, setFinalOutput] = React.useState([]);
     console.log(sessCart);
-    // var cartArr = [];
-    // console.log(sessCart.data.cart);
-    
+
     let itemId = async (carts) => {
         let cartArr = [];
         for (const productId in carts) {
-          cartArr.push(parseInt(productId));
+            cartArr.push(parseInt(productId));
         }
-        console.log(cartArr); 
-        setCartArray(cartArr);
+        console.log(cartArr);
+        // setCartArray(cartArr);
         await getProductMatches(cartArr);
-      };
-      
-    
-    const getProductMatches = async (cartArr) => {
-        let body = cartArr;
+    };
+
+
+    const getProductMatches = async (cartArray) => {
+        let body = cartArray;
         console.log(body);
         try {
-            const response = await axios.post(`${process.env.REACT_APP_ORIGIN}/api/products/match`, body, 
+            const response = await axios.post(`${process.env.REACT_APP_ORIGIN}/api/products/match`, body,
                 {
                     withCredentials: true,
                 }
             );
-            
+
             console.log(response.data);
-            setMatchedProductData(response.data);
+            formatItemList(response.data)
+            // setMatchedProductData(response.data);
         } catch (err) {
             console.error(err.message);
         }
@@ -40,67 +41,79 @@ const ShoppingCart = () => {
 
     useEffect(() => {
         itemId(sessCart.data.cart);
-        if (matchedProductData) {
-            formatItemList();
-        }
-    }, [sessCart]); 
+        // if (matchedProductData) {
+        //     formatItemList();
+        // }
+    }, [sessCart]);
 
     let output = [];
-    let formatItemList = () => {
+    let formatItemList = (matchedProductData) => {
         matchedProductData.forEach(dbItem => {
             let cartItem = sessCart.data.cart[dbItem.id];
             sizeInCartItem(cartItem, output, dbItem)
         })
-        console.log(output);
-        return output;
-    } 
+        // console.log(output);
+        setFinalOutput(output)
+        // return output;
+    }
 
     let sizeInCartItem = (itemsFromCart, arr, dbProduct) => {
         for (const size in itemsFromCart) {
             arr.push(
                 {
                     id: dbProduct.id,
+                    productName: dbProduct.product_name,
                     price: dbProduct.unit_price,
-                    // image: dbProduct.image1,
+                    image: dbProduct.image3,
                     size: size,
-                    quantity: itemsFromCart[size].quantity
+                    quantity: itemsFromCart[size].quantity,
+                    totalItemPrice: parseInt(dbProduct.unit_price) * parseInt(itemsFromCart[size].quantity)
                 }
             )
         }
     };
+    let grandTotal;
+    if(finalOutput){
+        grandTotal = finalOutput.reduce((grandTotal, currentValue) => grandTotal + currentValue.totalItemPrice, 0)
+    }
+    
 
-
-    // for (let i = 0; i < matchProductData.length; i++) {
-    //     let cartItem = cartArr[matchProductData[i].id]
-    // }
-
-
-    // try {
-    //     var itemList = allProductData.map((item) => {
-    //         return (
-    //             <div>
-    //                 <div>
-    //                     <img alt='an item of clothing' src={item.image1}/>
-    //                 </div>
-    //                 <div>
-    //                     <p>{item.product_name}</p>
-    //                     <p>{item.unit_price}</p>
-    //                 </div>
-    //             </div>
-    //         )
-    //     })
-    // } catch (error) {
-    //     console.log(error);
-    // }
+    try {
+        console.log(finalOutput)
+        var itemList = finalOutput.map((item) => {
+            return (
+                <CartItem
+                    key={nanoid()}
+                    productName={item.productName}
+                    price={item.price}
+                    size={item.size}
+                    quantity={item.quantity}
+                    image={item.image}
+                    totalItemPrice={item.totalItemPrice}
+                />
+            )
+        })
+    } catch (error) {
+        console.log(error);
+    }
 
     // console.log(cartArray);
     // console.log(allProductData);
 
     return (
-        <div>
+        <div className='shopping-cart'>
             <h2>Shopping Cart</h2>
-            {/* {sessCart.data.cart && sizeList} */}
-            {/* {allProductData && itemList} */}
+            {finalOutput && itemList}
+            {finalOutput && <div>
+                <div className='subtotal-price'>
+                    <p>Subtotal</p>
+                    {finalOutput && <p>${grandTotal}.00</p>}
+                </div>
+                <div className='checkout'>
+                    <p className='checkout-text'>Checkout</p>
+                </div>
+            </div>}
+            {!itemList && <h3>Cart Empty</h3>}
         </div>
     )
 }
