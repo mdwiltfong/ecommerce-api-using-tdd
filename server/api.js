@@ -74,6 +74,10 @@ app.use("/api/products", productsRouter);
 const cartRouter = require("../server/routes/cart");
 app.use("/api/cart", cartRouter);
 
+// Import and mount the shopping cart router
+const shoppingCartRouter = require("../server/routes/shoppingCart");
+app.use("/api/shoppingCart", shoppingCartRouter);
+
 // Import and mount the session router
 const sessionRouter = require("../server/routes/session");
 app.use("/api/session", sessionRouter);

@@ -83,6 +83,8 @@ const ShoppingCart = () => {
         var itemList = finalOutput.map((item) => {
             return (
                 <CartItem
+                    setSessCart={setSessCart}
+                    sessCart={sessCart}
                     key={nanoid()}
                     productName={item.productName}
                     price={item.price}
@@ -90,6 +92,7 @@ const ShoppingCart = () => {
                     quantity={item.quantity}
                     image={item.image}
                     totalItemPrice={item.totalItemPrice}
+                    id={item.id}
                 />
             )
         })
@@ -104,7 +107,7 @@ const ShoppingCart = () => {
         <div className='shopping-cart'>
             <h2>Shopping Cart</h2>
             {finalOutput && itemList}
-            {finalOutput && <div>
+            {finalOutput.length > 0 && <div>
                 <div className='subtotal-price'>
                     <p>Subtotal</p>
                     {finalOutput && <p>${grandTotal}.00</p>}
@@ -113,7 +116,7 @@ const ShoppingCart = () => {
                     <p className='checkout-text'>Checkout</p>
                 </div>
             </div>}
-            {!itemList && <h3>Cart Empty</h3>}
+            {itemList.length === 0 && <h3>Your Cart Is Empty</h3>}
         </div>
     )
 }
