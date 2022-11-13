@@ -8,6 +8,7 @@ const bodyParser = require("body-parser");
 // const cookieParser = require("cookie-parser");
 const pool = require("./db");
 const queries = require("./queries");
+const stripe = require('stripe')(process.env.STRIPE_KEY)
 
 const pgPool = new pg.Pool({
   user: process.env.USER,
@@ -61,6 +62,7 @@ app.use((req, res, next) => {
     });
 })
 
+app.use(express.static("public"));
 
 // Import and mount the profile router
 const profileRouter = require("../server/routes/profile");
@@ -81,5 +83,9 @@ app.use("/api/shoppingCart", shoppingCartRouter);
 // Import and mount the session router
 const sessionRouter = require("../server/routes/session");
 app.use("/api/session", sessionRouter);
+
+const checkoutRouter = require("../server/routes/checkout");
+app.use("/api/checkout", checkoutRouter);
+
 
 module.exports = app;
