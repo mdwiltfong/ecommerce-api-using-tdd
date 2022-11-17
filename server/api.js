@@ -39,7 +39,7 @@ app.use(
     }),
     secret: process.env.FOO_COOKIE_SECRET,
     resave: false,
-    cookie: { maxAge: 5 * 60 * 1000 }, // 5 Mins
+    cookie: { maxAge: 60 * 60 * 1000 }, // 60 Mins
     saveUninitialized: false,
     // Insert express-session options here
   })
@@ -73,6 +73,10 @@ app.use("/api/products", productsRouter);
 // Import and mount the cart router
 const cartRouter = require("../server/routes/cart");
 app.use("/api/cart", cartRouter);
+
+// Import and mount the shopping cart router
+const shoppingCartRouter = require("../server/routes/shoppingCart");
+app.use("/api/shoppingCart", shoppingCartRouter);
 
 // Import and mount the session router
 const sessionRouter = require("../server/routes/session");

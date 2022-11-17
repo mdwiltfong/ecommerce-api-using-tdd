@@ -101,7 +101,7 @@ cartRouter.put('/addOneToSize', async (req, res, next) => {
 
     try {
         console.log('******')
-        console.log(req.session.cart[cartProductNumber][size].quantity)
+        // console.log(req.session.cart[cartProductNumber][size].quantity)
         req.session.cart[cartProductNumber][size].quantity++; 
         console.log('******')
         return res.status(201).send(req.session);

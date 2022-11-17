@@ -1,6 +1,9 @@
 import { loginPage } from "../support/page_objects/LoginPage";
 import { registrationPage } from "../support/page_objects/RegistrationPage";
 import { homePage } from "../support/page_objects/homePage";
+import { productPage } from "../support/page_objects/ProductPage";
+import ShoppingCart from "../../src/components/ShoppingCart";
+import { shoppingCartPage } from "../support/page_objects/ShoppingCartPage";
 
 describe("Operations on user accounts", () => {
   beforeEach(() => {
@@ -17,6 +20,23 @@ describe("Operations on user accounts", () => {
     registrationPage.registerTestUser();
     const banner = homePage.getSuccessfulLoginBanner();
     banner.should("be.visible");
+  });
+
+  describe("Operations on products", () => {
+    beforeEach(() => {
+      cy.visit('/');
+    })
+    it("User can navigate to product page", () => {
+      homePage.clickThroughProduct();
+    });
+    it("User can select product size and add it to cart", () => {
+      productPage.visit();
+      productPage.addItemSizeToCart();
+    })
+    it("User can checkout products from shoppingcart", () => {
+      shoppingCartPage.visit();
+      shoppingCartPage.clickCheckout();
+    }) 
   });
 
   it.skip("User can navigate to registration page from LoginPage and register", () => {

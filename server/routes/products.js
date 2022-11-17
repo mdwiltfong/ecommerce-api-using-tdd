@@ -14,6 +14,19 @@ productsRouter.get("/", async (req, res, next) => {
     }
 });
 
+// GET products that are in cartSess
+productsRouter.post("/match", async (req, res, next) => {
+    try {
+        console.log(req.body)
+        const data = await pool.query(queries.productQueries.matchProductId, [req.body]);
+        console.log(data.rows)
+        return res.send(data.rows);
+    } catch (err) {
+        console.log(err.message);
+        next(err);
+    }
+});
+
 // GET individual product's details
 productsRouter.get("/:id", async (req, res, next) => {
     try {

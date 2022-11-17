@@ -170,3 +170,55 @@ body {
   margin: 0px;
   color: red;
 }
+
+.image-and-description {
+  display: flex;
+}
+
+.minus-quantity-plus, .price-remove {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.description {
+  margin-left: 20px;
+  text-align: left;
+}
+
+.cart-tile {
+  display: flex;
+  justify-content: space-between;
+}
+
+.quantity-price {
+  gap: 320px;
+  display: flex;
+}
+
+.shopping-cart {
+  padding:50px;
+}
+
+.subtotal-price {
+  color: grey;
+  display: flex;
+  justify-content: right;
+  gap: 320px;
+  margin-top: 15px;
+}
+
+.checkout-text {
+  margin-left: auto;
+  padding-top: 18px;
+  border: 3px black solid;
+  font-size: 20px;
+  margin-top: 20px;
+  width: 500px;
+  height: 51px;
+  text-align: center;
+  align-items: center;
+  /* line-height: 0px; */
+}
+
+

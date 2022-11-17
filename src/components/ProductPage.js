@@ -3,7 +3,7 @@ import { useParams, useNavigate, useOutletContext } from "react-router-dom";
 import { useQuery } from '@tanstack/react-query';
 import axios from "axios";
 
-const ProductPage = (props) => {
+const ProductPage = () => {
     const params = useParams();
     // console.log(params)
     // props.setProductParams(params.product);
@@ -73,7 +73,7 @@ const ProductPage = (props) => {
             console.log(error)
         }
         try {
-            body = {productData, sessCart}
+            body = {productData}
             const response = await axios.get(`${process.env.REACT_APP_ORIGIN}/api/products/${params.product}`,
                     {
                         withCredentials: true,
@@ -81,7 +81,7 @@ const ProductPage = (props) => {
                 let productId = response.data.rows[0].id;
                 // console.log(productId);
             
-            console.log(body);
+            // console.log(body);
             if (productId in sessCart.data.cart) {
                 console.log(sessCart.data.cart)
                 if (productData.size in sessCart.data.cart[productId]) {
